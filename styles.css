@@ -212,8 +212,8 @@ header h1 {
 .popup-content::before {
   content: "";
   position: absolute;
-  top: -10%; left: -10%;
-  width: 120%; height: 120%;  /* орнамент выступает за контент */
+  top: -30%; left: -30%;
+  width: 160%; height: 160%;  /* орнамент выступает за контент */
   background: url('public/img/form_gorizont_onament.png') no-repeat center center;
   background-size: cover;
   border-radius: var(--radius);
