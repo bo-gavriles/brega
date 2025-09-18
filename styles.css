@@ -179,6 +179,19 @@ header h1 {
   box-shadow: 0 20px 60px rgba(10,30,60,0.22);
 }
 
+.popup-content {
+  background: #fff;
+  border: 16px solid transparent;
+  border-image: url('public/img/form_gorizont_onament.png') 16 round;
+  border-radius: var(--radius);
+  padding: 22px;
+  width: 92%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(10,30,60,0.22);
+  position: relative;
+}
+
+
 .form-row {
   display: flex;
   flex-direction: column;
