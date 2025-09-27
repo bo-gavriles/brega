@@ -4,81 +4,58 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
-  <script src="main.js"></script>
   <title>Brega — Find & Rent Boats</title>
   <meta name="description" content="Brega fast way to find and rent boats. Map and simple booking form." />
   <link rel="stylesheet" href="styles.css" />
   <style>
-/* overlay */
-.popup {
-display: none;
-position: fixed;
-z-index: 1000;
-left: 0; top: 0;
-width: 100%; height: 100%;
-background: rgba(0,0,0,0.6);
-}
-
-
-/* popup box */
-.popup-content {
-background: #fff;
-margin: 10% auto;
-padding: 20px;
-border-radius: 12px;
-width: 90%;
-max-width: 400px;
-position: relative;
-}
-
-
-/* close button */
-.close {
-position: absolute;
-top: 10px; right: 15px;
-font-size: 24px;
-cursor: pointer;
-}
-
-
-.input-ornament {
-display: flex;
-align-items: center;
-border: 1px solid #ccc;
-border-radius: 8px;
-padding: 6px 10px;
-margin-top: 10px;
-background: url('public/img/form_gorizont_onament.png') no-repeat center left;
-background-size: 24px auto;
-}
-
-
-.input-ornament input {
-flex: 1;
-border: none;
-outline: none;
-padding-left: 30px;
-}
+    .cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .secondary { background: #28a745; color: #fff; }
+    .primary { background: #007bff; color: #fff; }
+    header, footer {
+      text-align: center;
+      margin: 20px;
+    }
+    .map-wrap { text-align: center; margin: 20px; }
+    .map-frame iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+    }
   </style>
 </head>
 <body>
   <div class="container" role="main">
     <header>
-      <img src="public/img/b.png" alt="Brega logo" style="height:56px;display:block;" onerror="this.style.display='none'"/>
+      <img src="public/img/b.png" alt="Brega logo" style="height:56px;display:block;margin:auto;" onerror="this.style.display='none'"/>
       <h1>Brega</h1>
+              <p class="section-sub">Brega is a convenient and fast way to find and rent boats. Browse locations on the map, contact owners directly, or add your boat to the catalog.</p>
       <img src="public/img/up_ornament.png" class="orn" alt="header ornament" onerror="this.style.display='none'"/>
     </header>
-    
-      <div class="cta-row" role="navigation" aria-label="Primary actions">
-        <button class="btn" id="openPopup">
-          <img src="public/img/form_gorizont_onament.png" alt="Add icon" style="height:20px;margin-right:6px"/> Add a boat
-        </button>
-        <button class="btn secondary" id="findBoatBtn">
-          <img src="public/img/ornamen_gorizont.png" alt="Find icon" style="height:20px;margin-right:6px"/> Find a boat
-        </button>
-      </div>
 
-    <div class="map-wrap" aria-hidden="false">
+    <div class="cta-row" role="navigation" aria-label="Primary actions">
+      <button class="btn primary" onclick="window.location.href='https://your-notion-form-link-for-owners'">
+        <img src="public/img/ornamen_gorizont.png" alt="Add icon" style="height:20px;margin-right:6px"/>  I have a boat
+      </button>
+      <button class="btn secondary" onclick="window.location.href='https://your-notion-form-link-for-renters'">
+        <img src="public/imgypg.png" alt="Find icon" style="height:20px;margin-right:6px"/>  Im looking a boat
+      </button>
+    </div>
+
+    <div class="map-wrap">
       <div class="map-frame" style="border-image: url('public/img/ornament_border.png') 12 round;">
         <iframe
           class="map-iframe"
@@ -86,10 +63,7 @@ padding-left: 30px;
           title="Brega map — locations">
         </iframe>
       </div>
-      <button class="map-cta" id="openBooking">Find a boat</button>
     </div>
-
-    <img src="public/img/ornament_top.png" class="orn-divider" alt="divider top" onerror="this.style.display='none'"/>
 
     <section aria-labelledby="what-is-brega" class="what">
       <div class="section-title">
@@ -97,100 +71,19 @@ padding-left: 30px;
         <p class="section-sub">Brega is a convenient and fast way to find and rent boats. Browse locations on the map, contact owners directly, or add your boat to the catalog.</p>
       </div>
 
-      <img src="public/img/midl_ornament.png" class="orn-divider" alt="divider mid" onerror="this.style.display='none'"/>
-
       <div class="cta-row" role="navigation" aria-label="Primary actions">
-        <button class="btn" id="openPopup">
-          <img src="public/img/form_gorizont_onament.png" alt="Add icon" style="height:20px;margin-right:6px"/> Add a boat
+        <button class="btn primary" onclick="window.location.href='https://your-notion-form-link-for-owners'">
+          <img src="public/img/form_gorizont_onament.png" alt="Add icon" style="height:20px;margin-right:6px"/> I have a boat
         </button>
-        <button class="btn secondary" id="findBoatBtn">
-          <img src="public/img/ornamen_gorizont.png" alt="Find icon" style="height:20px;margin-right:6px"/> Find a boat
+        <button class="btn secondary" onclick="window.location.href='https://your-notion-form-link-for-renters'">
+          <img src="public/img/ornamen_gorizont.png" alt="Find icon" style="height:20px;margin-right:6px"/> Im looking a boat
         </button>
       </div>
     </section>
 
-    <img src="public/img/down_ornament.png" class="orn-divider" alt="divider bottom" onerror="this.style.display='none'"/>
-
     <footer>
-      <p>© Brega 2025 — <a href="mailto:hello@brega.example">hello@brega.example</a></p>
+      <p>© Brega 2025 — <a href="mailto:hello@brega.example">hi@brega.app</a></p>
     </footer>
   </div>
-
-  <!-- POPUP -->
-  <div id="popupForm" class="popup">
-    <div class="popup-content">
-      <span id="closePopup" class="close">&times;</span>
-      <h2>Leave your contact</h2>
-      <form id="leadForm">
-        <label></label>
-        <input type="tel" name="phone" required placeholder="+598 123 4567">
-
-        <label></label>
-        <input type="email" name="email" required placeholder="you@example.com">
-
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal" id="modal">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h3 id="modalTitle" style="margin:0 0 8px;color:var(--blue)">Quick booking request</h3>
-      <form id="bookingForm">
-        <div class="form-row">
-          <label for="name">Your name</label>
-          <input id="name" name="name" type="text" required />
-        </div>
-        <div class="form-row">
-          <label for="contact">Email or WhatsApp</label>
-          <input id="contact" name="contact" type="text" placeholder="+598 9..." required />
-        </div>
-        <div class="form-row" style="display:flex;gap:10px;">
-          <div style="flex:1">
-            <label for="date">Date</label>
-            <input id="date" name="date" type="date" />
-          </div>
-          <div style="flex:1">
-            <label for="guests">Guests</label>
-            <input id="guests" name="guests" type="text" placeholder="4" />
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="note">Note (boat / format / hours)</label>
-          <textarea id="note" name="note"></textarea>
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="btn secondary" id="closeModal">Cancel</button>
-          <button type="submit" class="btn">Send request</button>
-        </div>
-        <p class="small" style="margin-top:8px">Requests will be sent to owners by email/WhatsApp. This is a demo pre-release form — no payment is required.</p>
-      </form>
-    </div>
-  </div>
-
-  <script src="main.js"></script>
-  <script>
-    const popup = document.getElementById("popupForm");
-    document.getElementById("openPopup").onclick = () => popup.style.display = "block";
-    document.getElementById("closePopup").onclick = () => popup.style.display = "none";
-
-    document.getElementById("leadForm").onsubmit = async (e) => {
-      e.preventDefault();
-      
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
-
-      // send to server
-      await fetch("/api/lead", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-      });
-
-      // redirect to add boat form
-      window.location.href = "/add-boat-form";
-    };
-  </script>
 </body>
 </html>
