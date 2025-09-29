@@ -1,100 +1,131 @@
-/* --- Общие настройки страницы --- */
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #ffffff; /* белый фон */
-  color: #333;
-}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
+  <title>Brega — Find & Rent Boats</title>
+  <meta name="description" content="Brega fast way to find and rent boats. Map and simple booking form." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      color: #222;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      margin: 0.6em 0;
+    }
+    .cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      transition: 0.3s;
+    }
+    .btn img { margin-right: 6px; }
+    .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .secondary { background: #28a745; color: #fff; }
+    .primary { background: #007bff; color: #fff; }
+    header, footer {
+      text-align: center;
+      margin: 20px;
+    }
+    .map-wrap { text-align: center; margin: 20px; }
+    .map-frame iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    footer p { font-size: 14px; color: #555; }
+    footer a { color: #007bff; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+      <img src="public/img/b.png" alt="Brega logo" style="height:56px;display:block;margin:auto;" onerror="this.style.display='none'"/>
+      <h1>Brega</h1>
+      <p class="section-sub">Brega is a convenient and fast way to find and rent boats. Make a form, we contact you with captain directly, or add your boat to the catalog.</p>
+      <img src="public/img/up_ornament.png" class="orn" alt="header ornament" onerror="this.style.display='none'"/>
+    </header>
 
-/* --- Контейнер для всего контента --- */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  text-align: center;
-}
+    <div class="cta-row" role="navigation" aria-label="Primary actions">
+      <button class="btn primary" onclick="window.location.href='https://your-notion-form-link-for-owners'">
+        <img src="public/img/ypgc.png" alt="Add icon" style="height:20px"/> I have a boat
+      </button>
+      <button class="btn secondary" onclick="window.location.href='https://your-notion-form-link-for-renters'">
+        <img src="public/img/look.png" alt="Find icon" style="height:20px"/> I'm looking a boat
+      </button>
+    </div>
 
-/* --- Заголовки --- */
-h1, h2, h3 {
-  margin: 0 0 20px 0;
-  font-weight: 700;
-  color: #1e1e1e;
-}
+    <div class="map-wrap">
+      <div class="map-frame">
+        <iframe
+          class="map-iframe"
+          src="https://www.google.com/maps?q=36.5,24.0&z=9&output=embed"
+          title="Brega map — locations">
+        </iframe>
+      </div>
+    </div>
 
-/* --- Кнопки --- */
-.cta-row {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 40px;
-}
+    <!-- New content after map -->
+    <section>
+      <h2>Why Brega?</h2>
+      <div class="features">
+        <div class="card">
+          <h3>For Boat Owners</h3>
+          <p>Earn with your yacht without middlemen, manage your schedule, and find passengers or friends for your next trip.</p>
+        </div>
+        <div class="card">
+          <h3>For Renters</h3>
+          <p>Search for boats near you, choose the format you want — a short ride, fishing, a romantic sunset or an adventure at sea.</p>
+        </div>
+    </section>
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  border: none;
-  min-width: 180px;
-  text-align: center;
-}
-
-/* --- Primary Button --- */
-.btn.primary {
-  background: linear-gradient(90deg, #1e90ff, #00bfff);
-  color: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-}
-
-/* --- Secondary Button --- */
-.btn.secondary {
-  background: #f0f8ff;
-  color: #1e90ff;
-  border: 2px solid #1e90ff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.btn.secondary:hover {
-  background: #1e90ff;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* --- Ссылки --- */
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* --- Футер --- */
-footer {
-  margin-top: 60px;
-  padding: 20px;
-  color: #777;
-  font-size: 14px;
-}
-
-/* --- Мобильная адаптивность --- */
-@media (max-width: 768px) {
-  .cta-row {
-    flex-direction: column;
-  }
-
-  .btn {
-    width: 100%;
-    min-width: unset;
-  }
-}
+    <section>
+      <h2>How It Works</h2>
+      <p>1. Choose your role — boat owner or renter.<br>
+         2. Fill in the simple form.<br>
+         3. Connect directly with captains or passengers.<br>
+         4. Set sail — it’s that easy!</p>
+    </section>
+    <footer>
+      <p>© Brega 2025 — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
+    </footer>
+  </div>
+</body>
+</html>
