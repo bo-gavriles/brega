@@ -8,11 +8,22 @@
   <meta name="description" content="Brega fast way to find and rent boats. Map and simple booking form." />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      color: #222;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      margin: 0.6em 0;
+    }
     .cta-row {
       display: flex;
       justify-content: center;
       gap: 12px;
       margin: 20px 0;
+      flex-wrap: wrap;
     }
     .btn {
       padding: 12px 20px;
@@ -20,9 +31,12 @@
       border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
+      display: flex;
+      align-items: center;
       transition: 0.3s;
     }
-    .btn:hover { opacity: 0.9; }
+    .btn img { margin-right: 6px; }
+    .btn:hover { opacity: 0.9; transform: translateY(-2px); }
     .secondary { background: #28a745; color: #fff; }
     .primary { background: #007bff; color: #fff; }
     header, footer {
@@ -34,7 +48,30 @@
       width: 100%;
       height: 300px;
       border: 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+    section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    footer p { font-size: 14px; color: #555; }
+    footer a { color: #007bff; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -42,20 +79,21 @@
     <header>
       <img src="public/img/b.png" alt="Brega logo" style="height:56px;display:block;margin:auto;" onerror="this.style.display='none'"/>
       <h1>Brega</h1>
-              <p class="section-sub">Brega is a convenient and fast way to find and rent boats. Make a form, we contact you with capitan directly, or add your boat to the catalog.</p>
+      <p class="section-sub">Brega is a convenient and fast way to find and rent boats. Make a form, we contact you with captain directly, or add your boat to the catalog.</p>
       <img src="public/img/up_ornament.png" class="orn" alt="header ornament" onerror="this.style.display='none'"/>
     </header>
+
     <div class="cta-row" role="navigation" aria-label="Primary actions">
-            </button>
       <button class="btn primary" onclick="window.location.href='https://your-notion-form-link-for-owners'">
-        <img src="public/img/ypgc.png" alt="Add icon" style="height:20px;margin-right:6px"/>  I have a boat
+        <img src="public/img/ypgc.png" alt="Add icon" style="height:20px"/> I have a boat
       </button>
-            <button class="btn secondary" onclick="window.location.href='https://your-notion-form-link-for-renters'">
-        <img src="public/img/look.png" alt="Find icon" style="height:20px;margin-right:6px"/>  Im looking a boat
+      <button class="btn secondary" onclick="window.location.href='https://your-notion-form-link-for-renters'">
+        <img src="public/img/look.png" alt="Find icon" style="height:20px"/> I'm looking a boat
       </button>
     </div>
+
     <div class="map-wrap">
-      <div class="map-frame" style="border-image: url('public/img/ornament_border.png') 12 round;">
+      <div class="map-frame">
         <iframe
           class="map-iframe"
           src="https://www.google.com/maps?q=36.5,24.0&z=9&output=embed"
@@ -63,6 +101,34 @@
         </iframe>
       </div>
     </div>
+
+    <!-- New content after map -->
+    <section>
+      <h2>Why Brega?</h2>
+      <div class="features">
+        <div class="card">
+          <h3>For Boat Owners</h3>
+          <p>Earn with your yacht without middlemen, manage your schedule, and find passengers or friends for your next trip.</p>
+        </div>
+        <div class="card">
+          <h3>For Renters</h3>
+          <p>Search for boats near you, choose the format you want — a short ride, fishing, a romantic sunset or an adventure at sea.</p>
+        </div>
+        <div class="card">
+          <h3>Freedom at Sea</h3>
+          <p>Simple, direct, and flexible — Brega brings you closer to the sea and makes sailing accessible for everyone.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How It Works</h2>
+      <p>1. Choose your role — boat owner or renter.<br>
+         2. Fill in the simple form.<br>
+         3. Connect directly with captains or passengers.<br>
+         4. Set sail — it’s that easy!</p>
+    </section>
+
     <footer>
       <p>© Brega 2025 — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
     </footer>
