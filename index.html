@@ -9,21 +9,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:#0f1724;
-      --card:#0b1220;
-      --muted:#9aa4b2;
+      --card:#ffffff;
+      --muted:#555;
       --accent:#1fb6ff;
       --accent-2:#7c3aed;
-      --glass: rgba(255,255,255,0.03);
       --radius:16px;
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
     *{box-sizing:border-box}
     body {
       margin: 0;
-      background: linear-gradient(180deg,var(--bg),#07101a 80%);
-      color: #e6eef6;
-      min-height: 100vh;
+      background: #ffffff;
+      color: #222;
       font-family: 'Inter', sans-serif;
     }
     h1, h2, h3 {
@@ -46,7 +43,7 @@
       flex-wrap: wrap;
     }
     .btn {
-      padding: 12px 20px;
+      padding: 14px 24px;
       border-radius: 12px;
       cursor: pointer;
       font-size: 15px;
@@ -59,12 +56,12 @@
     .btn img { margin-right: 6px; height:20px; }
     .btn.primary {
       background: linear-gradient(90deg,var(--accent),var(--accent-2));
-      color:#041026;
+      color:#fff;
     }
     .btn.secondary {
       background: transparent;
-      border: 1px solid rgba(255,255,255,0.06);
-      color: #e6eef6;
+      border: 1px solid #ccc;
+      color: #222;
     }
     .btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
@@ -74,7 +71,7 @@
       height: 300px;
       border: 0;
       border-radius: 14px;
-      box-shadow: 0 4px 18px rgba(2,6,23,0.6);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.1);
     }
 
     section {
@@ -90,12 +87,27 @@
       margin-top: 30px;
     }
     .card {
-      background: linear-gradient(180deg,var(--card),rgba(10,14,20,0.6));
+      background: var(--card);
       padding: 20px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.03);
-      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      border: 1px solid #eee;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
+
+    .big-btn {
+      display:block;
+      margin: 40px auto;
+      padding: 18px 28px;
+      font-size: 18px;
+      font-weight: 800;
+      text-align:center;
+      border-radius: 14px;
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#fff;
+      text-decoration:none;
+      max-width: 320px;
+    }
+
     footer p { font-size: 14px; color: var(--muted); }
     footer a { color: var(--accent); text-decoration: underline; }
     footer a:hover { opacity:0.8; }
@@ -152,6 +164,9 @@
          3. Conecta directamente con capitanes o pasajeros.<br>
          4. ¡Zarpa — así de fácil!</p>
     </section>
+
+    <!-- Nueva gran botón -->
+    <a href="#pago" class="big-btn">Pago de reserva </a>
 
     <footer>
       <p>© Brega 2025 — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
