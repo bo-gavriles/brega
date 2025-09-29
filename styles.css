@@ -7,6 +7,21 @@ body, html {
   color: #333;
   min-height: 100vh;
 }
+.footer-logos img {
+  height: 48px;        /* одинаковая высота */
+  width: auto;         /* пропорции сохраняются */
+  object-fit: contain; /* вписывание */
+  display: block;
+}
+
+.footer-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;           /* расстояние между логотипами */
+  flex-wrap: nowrap;   /* всегда в одну линию */
+}
+
 
 /* --- Контейнер для всего контента --- */
 .container {
