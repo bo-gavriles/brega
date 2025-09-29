@@ -168,7 +168,33 @@
     <!-- Nueva gran botón -->
     <a href="https://bo-gavriles.github.io/brega/pay" class="big-btn">Pago de reserva </a>
 
-    <footer>
+     <footer>   
+<!-- Footer с логобордом — Tailwind -->
+<footer class="bg-black text-white">
+  <div class="max-w-6xl mx-auto px-4 py-6">
+    <nav aria-label="Логоборд" class="flex items-center justify-center gap-6">
+      <a href="#" class="block p-1 rounded-md hover:scale-105 transition-transform" aria-label="UY">
+        <img src="/public/img/uy.png" alt="UY" class="w-12 h-12 object-contain" loading="lazy">
+      </a>
+
+      <a href="#" class="block p-1 rounded-md hover:scale-105 transition-transform" aria-label="MP">
+        <img src="/public/img/mp.png" alt="MP" class="w-12 h-12 object-contain" loading="lazy">
+      </a>
+
+      <a href="#" class="block p-1 rounded-md hover:scale-105 transition-transform" aria-label="LLogo">
+        <img src="/public/img/llogo.png" alt="LLogo" class="w-12 h-12 object-contain" loading="lazy">
+      </a>
+    </nav>
+
+    <!-- опционально: подпись под логобордом -->
+    <p class="mt-4 text-center text-sm text-gray-400">© <span id="year"></span> Brega.app con Mercado Pago en Uruguay</p>
+  </div>
+</footer>
+
+<script>
+  // простой скрипт для текущего года (опционально)
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
       <p>© Brega 2025 — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
     </footer>
   </div>
