@@ -3,14 +3,18 @@ body, html {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #ffffff !important; /* белый фон */
+  background-color: #ffffff !important;
   color: #333;
   min-height: 100vh;
 }
+
+/* --- Логотипы в футере --- */
 .footer-logos img {
-  height: 48px;        /* одинаковая высота */
-  width: auto;         /* пропорции сохраняются */
-  object-fit: contain; /* вписывание */
+  max-height: 48px;       /* ограничение по высоте */
+  max-width: 120px;       /* ограничение по ширине */
+  width: auto;            /* сохраняем пропорции */
+  height: auto;           /* адаптивное сжатие */
+  object-fit: contain;    /* вписывание */
   display: block;
 }
 
@@ -18,18 +22,18 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px;           /* расстояние между логотипами */
-  flex-wrap: nowrap;   /* всегда в одну линию */
+  gap: 24px;              /* расстояние между логотипами */
+  flex-wrap: wrap;        /* можно переносить строкой */
+  text-align: center;
 }
 
-
-/* --- Контейнер для всего контента --- */
+/* --- Контейнер --- */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
   text-align: center;
-  background-color: #ffffff !important; /* белый фон контейнера */
+  background-color: #ffffff !important;
 }
 
 /* --- Заголовки --- */
@@ -103,7 +107,7 @@ footer {
   padding: 20px;
   color: #777;
   font-size: 14px;
-  background-color: #ffffff !important; /* белый фон футера */
+  background-color: #ffffff !important;
 }
 
 /* --- Мобильная адаптивность --- */
@@ -116,5 +120,10 @@ footer {
   .btn {
     width: 100%;
     min-width: auto;
+  }
+
+  .footer-logos img {
+    max-height: 36px;  /* чуть меньше на телефоне */
+    max-width: 100px;
   }
 }
