@@ -3,7 +3,7 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  background: #ffffff; /* белый фон */
+  background-color: #ffffff; /* белый фон */
   color: #333;
 }
 
@@ -22,16 +22,17 @@ h1, h2, h3 {
   color: #1e1e1e;
 }
 
-/* --- Кнопки --- */
+/* --- CTA кнопки --- */
 .cta-row {
   display: flex;
   gap: 16px;
   justify-content: center;
   margin-top: 40px;
+  flex-wrap: wrap;
 }
 
 .btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 14px 28px;
@@ -91,10 +92,11 @@ footer {
 @media (max-width: 768px) {
   .cta-row {
     flex-direction: column;
+    gap: 12px;
   }
 
   .btn {
     width: 100%;
-    min-width: unset;
+    min-width: auto;
   }
 }
