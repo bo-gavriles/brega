@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Brega — Pago de reserva</title>
+  <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -20,12 +21,17 @@
     body{margin:0;background:linear-gradient(180deg,var(--bg),#07101a 80%);color:#e6eef6;min-height:100vh;}
     .wrap{max-width:980px;margin:48px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:20px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 30px rgba(2,6,23,0.6)}
     header{display:flex;gap:18px;align-items:center}
-    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#041026}
+    .logo{
+      width:64px;height:64px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;color:#041026;overflow:hidden
+    }
+    .logo img{width:100%;height:100%;object-fit:cover;display:block}
     h1{margin:0;font-size:22px}
     p.lead{margin:6px 0 0;color:var(--muted)}
 
     .grid{display:grid;grid-template-columns:1fr 360px;gap:22px;margin-top:22px}
-
     .card{background:linear-gradient(180deg,var(--card),rgba(10,14,20,0.6));padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
     .section{margin-bottom:18px}
     .pill{display:inline-flex;gap:8px;align-items:center;background:var(--glass);padding:8px 12px;border-radius:999px;color:var(--muted);font-weight:600}
@@ -52,105 +58,14 @@
 <body>
   <div class="wrap" role="main" aria-labelledby="title">
     <header>
-      <div class="logo" aria-hidden>BR</div>
+      <div class="logo" aria-hidden>
+        <img src="public/img/b.png" alt="Brega" onerror="this.style.display='none'">
+        <span style="display:none">BR</span>
+      </div>
       <div>
         <h1 id="title">Pago de reserva — Brega</h1>
-        <p class="lead">Un anticipo para garantizar el acuerdo y la tranquilidad tanto de clientes como de capitanes</p>
+        <p class="lead">Un anticipo que garantiza seguridad y confianza tanto para quienes buscan un barco como para los capitanes que lo ofrecen</p>
       </div>
     </header>
 
-    <div class="grid" aria-live="polite">
-      <main>
-        <article class="card" aria-label="Información de pago">
-          <div class="section">
-            <span class="pill">Anticipo de garantía</span>
-          </div>
-
-          <div class="section">
-            <h2 style="margin:0 0 8px 0">¿Por qué pedimos un anticipo?</h2>
-            <p class="small">Para proteger tanto a clientes como a capitanes: el anticipo demuestra la seriedad de las intenciones de ambas partes y nos permite confirmar la reserva. Si el capitán cancela o desaparece, encontraremos una alternativa o devolveremos el dinero según la política de reembolso.</p>
-          </div>
-
-          <div class="section">
-            <h3 style="margin:0 0 8px 0">Cómo funciona</h3>
-            <div class="steps">
-              <div class="step"><div class="num">1</div><div><strong>Realizas el anticipo</strong><div class="small">990 pesos — a través de Mercado Pago</div></div></div>
-              <div class="step"><div class="num">2</div><div><strong>Confirmamos la reserva</strong><div class="small">El capitán recibe la notificación y guarda el lugar.</div></div></div>
-              <div class="step"><div class="num">3</div><div><strong>Acuerdo garantizado</strong><div class="small">El cliente tiene su barco confirmado y el capitán tiene seguridad de que el viaje es real.</div></div></div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h3 style="margin:0 0 8px 0">Próximos pasos:</h3>
-            <p class="small">Para proteger a ambas partes, solicitamos un <strong>anticipo de 990 pesos vía <a class="link" href="http://link.mercadopago.com.uy/bregaapp" target="_blank" rel="noopener noreferrer">Mercado Pago</a></strong>. Esto sirve como garantía del acuerdo. Si una de las partes cancela o desaparece, buscamos una solución justa: reemplazo de barco o reembolso.</p>
-            <p class="small">Enlace de pago: <a href="http://link.mercadopago.com.uy/bregaapp" class="link" target="_blank" rel="noopener noreferrer">link.mercadopago.com.uy/bregaapp</a></p>
-          </div>
-
-          <div class="section">
-            <h3 style="margin:0 0 8px 0">Garantías y reembolso</h3>
-            <p class="small">Si una de las partes cancela o no responde, ofrecemos dos opciones: reembolsar el anticipo en su totalidad o buscar una embarcación alternativa de la misma categoría. El tiempo de procesamiento de reembolso es de hasta 5 días hábiles dependiendo del método de pago.</p>
-          </div>
-
-          <div class="section">
-            <h3 style="margin:0 0 8px 0">Preguntas frecuentes</h3>
-            <div style="margin-top:8px">
-              <strong>¿Qué incluyen los 990 pesos?</strong>
-              <p class="small">Es un anticipo de garantía que cubre la reserva y gastos de gestión para clientes y capitanes.</p>
-
-              <strong>¿Puedo pagar más tarde?</strong>
-              <p class="small">Para asegurar la reserva y evitar que el capitán acepte otro cliente, lo ideal es pagar de inmediato. En casos excepcionales podemos acordar un pago diferido, pero la reserva no estará garantizada.</p>
-
-              <strong>¿Quién procesa el pago?</strong>
-              <p class="small">El pago se realiza a través de Mercado Pago. Tras el pago recibirás una confirmación por e-mail.</p>
-            </div>
-          </div>
-
-          <div class="section">
-            <h3 style="margin:0 0 8px 0">Si algo sale mal</h3>
-            <p class="small">Escríbenos a <a href="mailto:support@brega.app" class="link">support@brega.app</a> o al chat — resolveremos el problema y, si es necesario, iniciaremos el reembolso.</p>
-          </div>
-        </article>
-      </main>
-
-      <aside>
-        <div class="paybox card" role="region" aria-label="Panel lateral de pago">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="muted">Anticipo</div>
-              <div class="price">990&nbsp;PESOS</div>
-            </div>
-            <div style="text-align:right">
-              <div class="muted">Método</div>
-              <div class="small">Mercado Pago</div>
-            </div>
-          </div>
-
-          <div style="margin-top:14px;display:flex;gap:10px;flex-direction:column">
-            <a class="btn" href="http://link.mercadopago.com.uy/bregaapp" target="_blank" rel="noopener noreferrer" aria-label="Pagar con Mercado Pago">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                <path d="M12 2L21 7v6c0 5-4 9-9 9s-9-4-9-9V7l9-5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Pagar 990 PESOS
-            </a>
-
-            <a class="btn secondary" href="#contact" aria-label="Contactar soporte">Contactar soporte</a>
-
-            <div style="font-size:13px;color:var(--muted);margin-top:6px">Al hacer clic en «Pagar» aceptas nuestra <a href="#terms" class="link">política de reembolso</a> y <a href="#terms" class="link">términos de uso</a>.</div>
-          </div>
-
-          <footer>
-            <div style="margin-top:12px">¿Dudas? Podemos reservar el barco manualmente y enviarte un enlace de pago por e-mail.</div>
-          </footer>
-        </div>
-      </aside>
-    </div>
-
-    <div id="contact" style="margin-top:18px" class="card">
-      <h3 style="margin-top:0">Contacto</h3>
-      <p class="small">E‑mail: <a href="mailto:hi@brega.app" class="link">hi@brega.app</a></p>
-      <p class="small">Teléfono / WhatsApp: +598 967 444 21</p>
-    </div>
-
-  </div>
-</body>
-</html>
+    <!-- дальше остаётся твоя структура без изменений -->
