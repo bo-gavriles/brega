@@ -21,6 +21,21 @@ header .orn {
   margin-left:auto;
   margin-right:auto;
 }
+header {
+  text-align: center;
+  margin: 24px;
+  overflow: hidden; /* ограничиваем всё, что вылазит */
+}
+
+header .orn {
+  margin-top: 12px;
+  max-width: 100vw; /* никогда не шире экрана */
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 /* --- Логотипы в футере --- */
 .footer-logos img {
