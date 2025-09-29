@@ -138,6 +138,13 @@ footer {
   font-size: 14px;
   background-color: #ffffff !important;
 }
+.orn {
+  display: block;
+  max-width: 100%; /* никогда не шире родителя */
+  width: auto;      /* сохраняем пропорции */
+  height: auto;
+  margin: 12px auto; /* центрируем по горизонтали и вертикально */
+}
 
 /* --- Мобильная адаптивность --- */
 @media (max-width: 768px) {
