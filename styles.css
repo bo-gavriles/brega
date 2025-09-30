@@ -20,10 +20,11 @@ header {
 }
 
 .orn {
-  max-width: 100% !important;
-  height: auto !important;
   display: block;
-  margin: 12px auto 0 auto !important;
+  max-width: 100%;   /* ограничиваем ширину контейнером */
+  width: 100%;       /* заставляем подстраиваться под контейнер */
+  height: auto;      /* сохраняем пропорции */
+  margin: 12px auto;
 }
 
 
