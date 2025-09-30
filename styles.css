@@ -20,13 +20,11 @@ header {
 }
 
 .orn {
+  max-width: 100% !important;
+  height: auto !important;
   display: block;
-  max-width: 100%;
-  width: 100%;  /* растягиваем по ширине родителя */
-  height: auto; /* сохраняем пропорции */
-  margin: 12px auto;
+  margin: 12px auto 0 auto !important;
 }
-
 
 
 /* --- Логотипы в футере --- */
