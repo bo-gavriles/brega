@@ -1,20 +1,10 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5CTTBJDRW8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-5CTTBJDRW8');
-</script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Brega — Encuentra tu aventura en el mar</title>
   <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
-  <title>Brega — Conectamos capitanes y amantes del mar. Encuentra y alquila embarcaciones</title>
-  <meta name="description" content="Brega facilita encontrar un capitán y una embarcación para tu próxima aventura en el agua. Forma rápida para buscar y alquilar barcos. Mapa y formulario de reserva sencillo. Conectamos capitanes y amantes del mar." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -24,150 +14,136 @@
       --accent-2:#7c3aed;
       --radius:16px;
     }
-    * { box-sizing:border-box; }
-    body {
-      margin:0; padding:0;
-      font-family:'Inter', sans-serif;
-      background:#fff; color:#222;
-    }
-    h1,h2,h3 { font-weight:700; margin:0.6em 0; }
+    body { font-family:'Inter', sans-serif; margin:0; padding:0; background:#f9f9f9; color:#222; }
     header { text-align:center; margin:24px; }
-    header img { height:56px; display:block; margin:auto; }
-    .section-sub { color: var(--muted); }
-    .cta-row {
-      display:flex; justify-content:center; gap:12px;
-      margin:30px 0; flex-wrap:wrap;
-    }
-    .btn {
-      padding:14px 24px; border-radius:12px; cursor:pointer;
-      font-size:15px; display:inline-flex; align-items:center;
-      font-weight:700; text-decoration:none; transition:0.3s;
-    }
-    .btn img { margin-right:6px; height:20px; }
+    .lang-selector { display:flex; justify-content:center; gap:10px; margin-bottom:20px; align-items:center; font-size:14px; }
+    .lang-selector img { cursor:pointer; width:28px; height:20px; border:1px solid #ccc; border-radius:4px; }
+    h1,h2,h3 { font-weight:700; }
+    .btn { padding:14px 24px; border-radius:12px; cursor:pointer; font-size:15px; font-weight:700; text-decoration:none; transition:0.3s; }
     .btn.primary { background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; }
     .btn.secondary { background:transparent; border:1px solid #ccc; color:#222; }
-    .btn:hover { opacity:0.9; transform:translateY(-2px); }
-
+    .cta-row { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:30px 0; }
+    section { max-width:900px; margin:auto; padding:0 20px; text-align:center; }
+    .card { padding:20px; border-radius:var(--radius); background:var(--card); box-shadow:0 2px 8px rgba(0,0,0,0.05); border:1px solid #eee; }
+    footer { text-align:center; padding:20px; font-size:14px; color:#777; background:#fff; margin-top:40px; }
     .map-wrap { text-align:center; margin:20px; }
-    .map-frame iframe {
-      width:100%; height:300px; border:0;
-      border-radius:14px; box-shadow:0 4px 18px rgba(0,0,0,0.1);
-    }
-    .orn {
-  display: block;
-  max-width: 100%;   /* ограничиваем по ширине контейнера */
-  height: auto;      /* сохраняем пропорции */
-  margin: 12px auto; /* центрируем */
-}
-
-    section { max-width:900px; margin:40px auto; padding:0 20px; text-align:center; }
-    .features {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-      gap:24px; margin-top:30px;
-    }
-    .card {
-      background:var(--card); padding:20px;
-      border-radius:14px; border:1px solid #eee;
-      box-shadow:0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .big-btn {
-      display:block; margin:40px auto;
-      padding:18px 28px; font-size:18px; font-weight:800;
-      text-align:center; border-radius:14px;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      color:#fff; text-decoration:none; max-width:320px;
-    }
-
-    footer {
-      margin-top:60px; padding:20px; font-size:14px;
-      background:#fff; color:#777;
-      text-align:center;
-    }
-
-    .footer-logos {
-      display:flex; justify-content:center; align-items:center;
-      gap:24px; flex-wrap:wrap; margin-bottom:12px;
-    }
-    .footer-logos img {
-      max-height:48px; max-width:120px;
-      width:auto; height:auto; object-fit:contain;
-    }
-
-    @media (max-width:768px) {
-      .cta-row { flex-direction:column; gap:12px; }
-      .btn { width:100%; min-width:auto; }
-      .footer-logos img { max-height:36px; max-width:100px; }
-    }
+    .map-frame iframe { width:100%; height:300px; border:0; border-radius:14px; box-shadow:0 4px 18px rgba(0,0,0,0.1); }
+    .big-btn { display:block; margin:40px auto; padding:18px 28px; font-size:18px; font-weight:800; text-align:center; border-radius:14px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; text-decoration:none; max-width:320px; }
   </style>
 </head>
 <body>
+
+  <div class="lang-selector">
+    <span>Seleccione idioma:</span>
+    <img src="public/img/flags/es.png" alt="Español" onclick="setLanguage('es')">
+    <img src="public/img/flags/en.png" alt="English" onclick="setLanguage('en')">
+    <img src="public/img/flags/pt.png" alt="Português" onclick="setLanguage('pt')">
+  </div>
+
   <div class="container" role="main">
     <header>
-      <img src="public/img/b.png" alt="Logotipo de Brega" onerror="this.style.display='none'"/>
-      <h1>Brega</h1>
-      <p class="section-sub">Brega facilita encontrar un capitán y una embarcación para tu próxima aventura en el agua. Completa un formulario y nos pondremos en contacto contigo directamente con el capitán.</p>
-      <img src="public/img/up_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
+      <img src="public/img/b.png" alt="Logotipo de Brega" style="max-height:60px;" onerror="this.style.display='none'"/>
+      <h1 id="title"></h1>
+      <p id="subtitle"></p>
     </header>
 
-    <div class="cta-row" role="navigation" aria-label="Acciones principales">
-      <a href="https://real-dogsled-d8a.notion.site/27d9bf7f509581e69834f7305376bb90?pvs=105" class="btn primary" target="_blank" rel="noopener noreferrer">
-        <img src="public/img/ypgsf.png" alt="Icono añadir"/> Tengo un barco
-      </a>
-      <a href="https://real-dogsled-d8a.notion.site/2799bf7f50958177b63adb311435ceb9" class="btn secondary" target="_blank" rel="noopener noreferrer">
-        <img src="public/img/look.png" alt="Icono buscar"/> Busco un barco
-      </a>
+    <div class="cta-row">
+      <a href="#" class="btn primary" id="btn-own"></a>
+      <a href="#" class="btn secondary" id="btn-search"></a>
     </div>
 
     <div class="map-wrap">
       <div class="map-frame">
-        <iframe src="https://www.google.com/maps?q=36.5,24.0&z=9&output=embed" title="Mapa de Brega — ubicaciones"></iframe>
+        <iframe src="https://www.google.com/maps?q=36.5,24.0&z=9&output=embed" title="Mapa de Brega"></iframe>
       </div>
     </div>
 
     <section>
-            <img src="public/img/down_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
-      <h2>¿Por qué Brega?</h2>
-      <div class="features">
+      <h2 id="why-title"></h2>
+      <div class="features" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:24px;">
         <div class="card">
-          <h3>Para propietarios de embarcaciones</h3>
-          <p>Gana con tu embarcación sin intermediarios, gestiona tu calendario y encuentra pasajeros o compañeros para tu próximo viaje.</p>
+          <h3 id="owner-title"></h3>
+          <p id="owner-desc"></p>
         </div>
         <div class="card">
-          <h3>Para quienes alquilan</h3>
-          <p>Busca embarcaciones cercanas, elige el formato que prefieras —un paseo corto, pesca, un atardecer romántico o una aventura en el mar.</p>
+          <h3 id="seeker-title"></h3>
+          <p id="seeker-desc"></p>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>Cómo funciona</h2>
-      <p>1. Elige tu rol — propietario o cliente.<br>
-         2. Rellena el formulario sencillo.<br>
-         3. Conecta directamente con capitanes o pasajeros.<br>
-         4. ¡Zarpa — así de fácil!</p>
+      <h2 id="how-title"></h2>
+      <p id="how-desc"></p>
     </section>
 
-    <a href="https://bo-gavriles.github.io/brega/pay" class="big-btn">Pago de reserva</a>
+    <a href="#" class="btn primary big-btn">Pago de reserva</a>
   </div>
 
   <footer>
-    <div class="footer-logos">
-      <a href="#"><img src="/public/img/uy.png" alt="UY"></a>
-      <a href="#"><img src="/public/img/mp.png" alt="MP"></a>
-      <a href="#"><img src="/public/img/llogo.png" alt="LLogo"></a>
-    </div>
-    <p>© <span id="year"></span> <a href="index.html" class="link">Brega.app</a> con Mercado Pago en Uruguay — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
-      <div style="font-size:13px;color:var(--muted);margin-top:6px">
-    Al hacer clic en «Pagar» aceptas nuestra 
-    <a href="/refund-es.html" class="link">política de reembolso</a> y 
-    <a href="/terms-es.html" class="link">términos de uso</a>.
-  </div>
+    <p>© <span id="year"></span> Brega.app — hi@brega.app</p>
   </footer>
 
   <script>
+    const languages = {
+      es: {
+        title: "Brega",
+        subtitle: "Brega conecta a los amantes del mar con propietarios de embarcaciones. Recibe solicitudes directamente.",
+        btnOwn: "Tengo un barco",
+        btnSearch: "Busco un barco",
+        whyTitle: "¿Por qué Brega?",
+        ownerTitle: "Para propietarios de embarcaciones",
+        ownerDesc: "Encuentra compañeros para tu viaje y gestiona tu embarcación sin intermediarios.",
+        seekerTitle: "Para quienes alquilan",
+        seekerDesc: "Busca embarcaciones cercanas y vive aventuras en el mar.",
+        howTitle: "Cómo funciona",
+        howDesc: "1. Elige tu rol — propietario o amante del mar.\n2. Completa el formulario.\n3. Conecta directamente.\n4. Zarpa."
+      },
+      en: {
+        title: "Brega",
+        subtitle: "Brega connects sea lovers with boat owners. Receive requests directly.",
+        btnOwn: "I have a boat",
+        btnSearch: "I’m looking for a boat",
+        whyTitle: "Why Brega?",
+        ownerTitle: "For boat owners",
+        ownerDesc: "Find companions for your trip and manage your boat without intermediaries.",
+        seekerTitle: "For sea lovers",
+        seekerDesc: "Find nearby boats and enjoy sea adventures.",
+        howTitle: "How it works",
+        howDesc: "1. Choose your role — owner or sea lover.\n2. Fill the form.\n3. Connect directly.\n4. Set sail."
+      },
+      pt: {
+        title: "Brega",
+        subtitle: "Brega conecta amantes do mar com proprietários de embarcações. Receba pedidos diretamente.",
+        btnOwn: "Tenho um barco",
+        btnSearch: "Procuro um barco",
+        whyTitle: "Por que Brega?",
+        ownerTitle: "Para proprietários de embarcações",
+        ownerDesc: "Encontre companheiros para sua viagem e gerencie seu barco sem intermediários.",
+        seekerTitle: "Para amantes do mar",
+        seekerDesc: "Encontre embarcações próximas e viva aventuras no mar.",
+        howTitle: "Como funciona",
+        howDesc: "1. Escolha seu papel — proprietário ou amante do mar.\n2. Preencha o formulário.\n3. Conecte-se diretamente.\n4. Zarpe."
+      }
+    };
+
+    function setLanguage(lang) {
+      document.getElementById('title').innerText = languages[lang].title;
+      document.getElementById('subtitle').innerText = languages[lang].subtitle;
+      document.getElementById('btn-own').innerText = languages[lang].btnOwn;
+      document.getElementById('btn-search').innerText = languages[lang].btnSearch;
+      document.getElementById('why-title').innerText = languages[lang].whyTitle;
+      document.getElementById('owner-title').innerText = languages[lang].ownerTitle;
+      document.getElementById('owner-desc').innerText = languages[lang].ownerDesc;
+      document.getElementById('seeker-title').innerText = languages[lang].seekerTitle;
+      document.getElementById('seeker-desc').innerText = languages[lang].seekerDesc;
+      document.getElementById('how-title').innerText = languages[lang].howTitle;
+      document.getElementById('how-desc').innerText = languages[lang].howDesc;
+    }
+
+    setLanguage('es');
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>
