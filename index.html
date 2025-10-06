@@ -14,6 +14,20 @@
       --accent-2:#7c3aed;
       --radius:16px;
     }
+        .footer-logos {
+      display:flex; justify-content:center; align-items:center;
+      gap:24px; flex-wrap:wrap; margin-bottom:12px;
+    }
+    .footer-logos img {
+      max-height:48px; max-width:120px;
+      width:auto; height:auto; object-fit:contain;
+    }
+
+    @media (max-width:768px) {
+      .cta-row { flex-direction:column; gap:12px; }
+      .btn { width:100%; min-width:auto; }
+      .footer-logos img { max-height:36px; max-width:100px; }
+    }
         .orn {
   display: block;
   max-width: 100%;   /* ограничиваем по ширине контейнера */
@@ -44,7 +58,7 @@
   <div class="lang-selector">
     <span>Seleccione idioma:</span>
     <button onclick="setLanguage('es')">🇪🇸</button>
-    <button onclick="setLanguage('en')">🇬🇧</button>
+    <button onclick="setLanguage('en')">🇺🇸</button>
     <button onclick="setLanguage('pt')">🇵🇹</button>
   </div>
 
