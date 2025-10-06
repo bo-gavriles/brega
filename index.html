@@ -14,6 +14,12 @@
       --accent-2:#7c3aed;
       --radius:16px;
     }
+        .orn {
+  display: block;
+  max-width: 100%;   /* ограничиваем по ширине контейнера */
+  height: auto;      /* сохраняем пропорции */
+  margin: 12px auto; /* центрируем */
+              }
     body { font-family:'Inter', sans-serif; margin:0; padding:0; background:#fff; color:#222; }
     header { text-align:center; margin:24px; }
     .lang-selector { display:flex; justify-content:center; gap:15px; margin-bottom:20px; align-items:center; font-size:14px; }
@@ -53,13 +59,13 @@
       <a href="#" class="btn primary" id="btn-own"></a>
       <a href="#" class="btn secondary" id="btn-search"></a>
     </div>
-
+      <img src="public/img/up_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
     <div class="map-wrap">
       <div class="map-frame">
         <iframe src="https://www.google.com/maps?q=36.5,24.0&z=9&output=embed" title="Mapa de Brega"></iframe>
       </div>
     </div>
-
+            <img src="public/img/down_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
     <section>
       <h2 id="why-title"></h2>
       <div class="features" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:24px;">
@@ -83,8 +89,19 @@
   </div>
 
   <footer>
-    <p>© <span id="year"></span> Brega.app — hi@brega.app</p>
+    <div class="footer-logos">
+      <a href="#"><img src="/public/img/uy.png" alt="UY"></a>
+      <a href="#"><img src="/public/img/mp.png" alt="MP"></a>
+      <a href="#"><img src="/public/img/llogo.png" alt="LLogo"></a>
+    </div>
+    <p>© <span id="year"></span> <a href="index.html" class="link">Brega.app</a> con Mercado Pago en Uruguay — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px">
+    Al hacer clic en «Pagar» aceptas nuestra 
+    <a href="/refund-es.html" class="link">política de reembolso</a> y 
+    <a href="/terms-es.html" class="link">términos de uso</a>.
+  </div>
   </footer>
+  <script>    document.getElementById('year').textContent = new Date().getFullYear();  </script></body></html>
 
   <script>
     const languages = {
