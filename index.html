@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="es">
-
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Brega — Encuentra tu aventura en el mar</title>
@@ -14,10 +14,12 @@
       --accent-2:#7c3aed;
       --radius:16px;
     }
-    body { font-family:'Inter', sans-serif; margin:0; padding:0; background:#f9f9f9; color:#222; }
+    body { font-family:'Inter', sans-serif; margin:0; padding:0; background:#fff; color:#222; }
     header { text-align:center; margin:24px; }
-    .lang-selector { display:flex; justify-content:center; gap:10px; margin-bottom:20px; align-items:center; font-size:14px; }
-    .lang-selector img { cursor:pointer; width:28px; height:20px; border:1px solid #ccc; border-radius:4px; }
+    .lang-selector { display:flex; justify-content:center; gap:15px; margin-bottom:20px; align-items:center; font-size:14px; }
+    .lang-selector button { border:none; background:none; cursor:pointer; padding:5px; }
+    .lang-selector svg { width:28px; height:28px; border-radius:4px; transition:transform 0.2s; }
+    .lang-selector svg:hover { transform:scale(1.1); }
     h1,h2,h3 { font-weight:700; }
     .btn { padding:14px 24px; border-radius:12px; cursor:pointer; font-size:15px; font-weight:700; text-decoration:none; transition:0.3s; }
     .btn.primary { background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; }
@@ -32,21 +34,12 @@
   </style>
 </head>
 <body>
-<head>
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5CTTBJDRW8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-5CTTBJDRW8');
-</script>
   <div class="lang-selector">
     <span>Seleccione idioma:</span>
-    <img src="public/img/flags/es.png" alt="Español" onclick="setLanguage('es')">
-    <img src="public/img/flags/en.png" alt="English" onclick="setLanguage('en')">
-    <img src="public/img/flags/pt.png" alt="Português" onclick="setLanguage('pt')">
+    <button onclick="setLanguage('es')">🇪🇸</button>
+    <button onclick="setLanguage('en')">🇬🇧</button>
+    <button onclick="setLanguage('pt')">🇵🇹</button>
   </div>
 
   <div class="container" role="main">
@@ -95,45 +88,9 @@
 
   <script>
     const languages = {
-      es: {
-        title: "Brega",
-        subtitle: "Brega conecta a los amantes del mar con propietarios de embarcaciones. Recibe solicitudes directamente.",
-        btnOwn: "Tengo un barco",
-        btnSearch: "Busco un barco",
-        whyTitle: "¿Por qué Brega?",
-        ownerTitle: "Para propietarios de embarcaciones",
-        ownerDesc: "Encuentra compañeros para tu viaje y gestiona tu embarcación sin intermediarios.",
-        seekerTitle: "Para quienes alquilan",
-        seekerDesc: "Busca embarcaciones cercanas y vive aventuras en el mar.",
-        howTitle: "Cómo funciona",
-        howDesc: "1. Elige tu rol — propietario o amante del mar.\n2. Completa el formulario.\n3. Conecta directamente.\n4. Zarpa."
-      },
-      en: {
-        title: "Brega",
-        subtitle: "Brega connects sea lovers with boat owners. Receive requests directly.",
-        btnOwn: "I have a boat",
-        btnSearch: "I’m looking for a boat",
-        whyTitle: "Why Brega?",
-        ownerTitle: "For boat owners",
-        ownerDesc: "Find companions for your trip and manage your boat without intermediaries.",
-        seekerTitle: "For sea lovers",
-        seekerDesc: "Find nearby boats and enjoy sea adventures.",
-        howTitle: "How it works",
-        howDesc: "1. Choose your role — owner or sea lover.\n2. Fill the form.\n3. Connect directly.\n4. Set sail."
-      },
-      pt: {
-        title: "Brega",
-        subtitle: "Brega conecta amantes do mar com proprietários de embarcações. Receba pedidos diretamente.",
-        btnOwn: "Tenho um barco",
-        btnSearch: "Procuro um barco",
-        whyTitle: "Por que Brega?",
-        ownerTitle: "Para proprietários de embarcações",
-        ownerDesc: "Encontre companheiros para sua viagem e gerencie seu barco sem intermediários.",
-        seekerTitle: "Para amantes do mar",
-        seekerDesc: "Encontre embarcações próximas e viva aventuras no mar.",
-        howTitle: "Como funciona",
-        howDesc: "1. Escolha seu papel — proprietário ou amante do mar.\n2. Preencha o formulário.\n3. Conecte-se diretamente.\n4. Zarpe."
-      }
+      es: { title: "Brega", subtitle: "Brega conecta a los amantes del mar con propietarios de embarcaciones. Recibe solicitudes directamente.", btnOwn: "Tengo un barco", btnSearch: "Busco un barco", whyTitle: "¿Por qué Brega?", ownerTitle: "Para propietarios de embarcaciones", ownerDesc: "Encuentra compañeros para tu viaje y gestiona tu embarcación sin intermediarios.", seekerTitle: "Para quienes alquilan", seekerDesc: "Busca embarcaciones cercanas y vive aventuras en el mar.", howTitle: "Cómo funciona", howDesc: "1. Elige tu rol — propietario o amante del mar.\n2. Completa el formulario.\n3. Conecta directamente.\n4. Zarpa." },
+      en: { title: "Brega", subtitle: "Brega connects sea lovers with boat owners. Receive requests directly.", btnOwn: "I have a boat", btnSearch: "I’m looking for a boat", whyTitle: "Why Brega?", ownerTitle: "For boat owners", ownerDesc: "Find companions for your trip and manage your boat without intermediaries.", seekerTitle: "For sea lovers", seekerDesc: "Find nearby boats and enjoy sea adventures.", howTitle: "How it works", howDesc: "1. Choose your role — owner or sea lover.\n2. Fill the form.\n3. Connect directly.\n4. Set sail." },
+      pt: { title: "Brega", subtitle: "Brega conecta amantes do mar com proprietários de embarcações. Receba pedidos diretamente.", btnOwn: "Tenho um barco", btnSearch: "Procuro um barco", whyTitle: "Por que Brega?", ownerTitle: "Para proprietários de embarcações", ownerDesc: "Encontre companheiros para sua viagem e gerencie seu barco sem intermediários.", seekerTitle: "Para amantes do mar", seekerDesc: "Encontre embarcações próximas e viva aventuras no mar.", howTitle: "Como funciona", howDesc: "1. Escolha seu papel — proprietário ou amante do mar.\n2. Preencha o formulário.\n3. Conecte-se diretamente.\n4. Zarpe." }
     };
 
     function setLanguage(lang) {
