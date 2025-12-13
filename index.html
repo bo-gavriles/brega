@@ -14,52 +14,212 @@
       --accent-2:#7c3aed;
       --radius:16px;
     }
-        .footer-logos {
+    
+    .footer-logos {
       display:flex; justify-content:center; align-items:center;
       gap:24px; flex-wrap:wrap; margin-bottom:12px;
     }
+    
     .footer-logos img {
       max-height:48px; max-width:120px;
       width:auto; height:auto; object-fit:contain;
     }
+    
+    .orn {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 12px auto;
+    }
+    
+    body { 
+      font-family:'Inter', sans-serif; 
+      margin:0; 
+      padding:0; 
+      background:#fff; 
+      color:#222; 
+    }
+    
+    header { 
+      text-align:center; 
+      margin:24px; 
+    }
+    
+    .lang-selector { 
+      display:flex; 
+      justify-content:center; 
+      gap:10px; 
+      margin-bottom:20px; 
+      align-items:center; 
+      font-size:14px;
+      flex-wrap:wrap;
+      padding:0 10px;
+    }
+    
+    .lang-selector button { 
+      border:none; 
+      background:none; 
+      cursor:pointer; 
+      padding:5px;
+      font-size:20px;
+      line-height:1;
+      border-radius:4px;
+      transition:background 0.2s;
+    }
+    
+    .lang-selector button:hover { 
+      background:rgba(0,0,0,0.05);
+    }
+    
+    h1,h2,h3 { font-weight:700; }
+    
+    .btn { 
+      padding:14px 24px; 
+      border-radius:12px; 
+      cursor:pointer; 
+      font-size:15px; 
+      font-weight:700; 
+      text-decoration:none; 
+      transition:0.3s; 
+      display:inline-block;
+      text-align:center;
+    }
+    
+    .btn.primary { 
+      background:linear-gradient(90deg,var(--accent),var(--accent-2)); 
+      color:#fff; 
+    }
+    
+    .btn.secondary { 
+      background:transparent; 
+      border:1px solid #ccc; 
+      color:#222; 
+    }
+    
+    .cta-row { 
+      display:flex; 
+      justify-content:center; 
+      gap:12px; 
+      flex-wrap:wrap; 
+      margin:30px 0; 
+    }
+    
+    section { 
+      max-width:900px; 
+      margin:auto; 
+      padding:0 20px; 
+      text-align:center; 
+    }
+    
+    .card { 
+      padding:20px; 
+      border-radius:var(--radius); 
+      background:var(--card); 
+      box-shadow:0 2px 8px rgba(0,0,0,0.05); 
+      border:1px solid #eee; 
+    }
+    
+    footer { 
+      text-align:center; 
+      padding:20px; 
+      font-size:14px; 
+      color:#777; 
+      background:#fff; 
+      margin-top:40px; 
+    }
+    
+    .map-wrap { 
+      text-align:center; 
+      margin:20px; 
+    }
+    
+    .map-frame iframe { 
+      width:100%; 
+      height:300px; 
+      border:0; 
+      border-radius:14px; 
+      box-shadow:0 4px 18px rgba(0,0,0,0.1); 
+    }
+    
+    .big-btn { 
+      display:block; 
+      margin:40px auto; 
+      padding:18px 28px; 
+      font-size:18px; 
+      font-weight:800; 
+      text-align:center; 
+      border-radius:14px; 
+      background:linear-gradient(90deg,var(--accent),var(--accent-2)); 
+      color:#fff; 
+      text-decoration:none; 
+      max-width:320px; 
+    }
+    
+    .link {
+      color:var(--accent);
+      text-decoration:none;
+    }
+    
+    .link:hover {
+      text-decoration:underline;
+    }
 
     @media (max-width:768px) {
-      .cta-row { flex-direction:column; gap:12px; }
-      .btn { width:100%; min-width:auto; }
-      .footer-logos img { max-height:36px; max-width:100px; }
+      .cta-row { 
+        flex-direction:column; 
+        gap:12px; 
+        align-items:center;
+      }
+      
+      .btn { 
+        width:100%; 
+        max-width:300px;
+        min-width:auto; 
+      }
+      
+      .footer-logos img { 
+        max-height:36px; 
+        max-width:100px; 
+      }
+      
+      .lang-selector {
+        gap:8px;
+        font-size:13px;
+      }
+      
+      .lang-selector button {
+        font-size:18px;
+      }
+      
+      .lang-selector span {
+        width:100%;
+        text-align:center;
+        margin-bottom:5px;
+      }
     }
-        .orn {
-  display: block;
-  max-width: 100%;   /* ограничиваем по ширине контейнера */
-  height: auto;      /* сохраняем пропорции */
-  margin: 12px auto; /* центрируем */
-              }
-    body { font-family:'Inter', sans-serif; margin:0; padding:0; background:#fff; color:#222; }
-    header { text-align:center; margin:24px; }
-    .lang-selector { display:flex; justify-content:center; gap:15px; margin-bottom:20px; align-items:center; font-size:14px; }
-    .lang-selector button { border:none; background:none; cursor:pointer; padding:5px; }
-    .lang-selector svg { width:28px; height:28px; border-radius:4px; transition:transform 0.2s; }
-    .lang-selector svg:hover { transform:scale(1.1); }
-    h1,h2,h3 { font-weight:700; }
-    .btn { padding:14px 24px; border-radius:12px; cursor:pointer; font-size:15px; font-weight:700; text-decoration:none; transition:0.3s; }
-    .btn.primary { background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; }
-    .btn.secondary { background:transparent; border:1px solid #ccc; color:#222; }
-    .cta-row { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:30px 0; }
-    section { max-width:900px; margin:auto; padding:0 20px; text-align:center; }
-    .card { padding:20px; border-radius:var(--radius); background:var(--card); box-shadow:0 2px 8px rgba(0,0,0,0.05); border:1px solid #eee; }
-    footer { text-align:center; padding:20px; font-size:14px; color:#777; background:#fff; margin-top:40px; }
-    .map-wrap { text-align:center; margin:20px; }
-    .map-frame iframe { width:100%; height:300px; border:0; border-radius:14px; box-shadow:0 4px 18px rgba(0,0,0,0.1); }
-    .big-btn { display:block; margin:40px auto; padding:18px 28px; font-size:18px; font-weight:800; text-align:center; border-radius:14px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#fff; text-decoration:none; max-width:320px; }
+    
+    @media (max-width:480px) {
+      .lang-selector button {
+        font-size:16px;
+      }
+      
+      .big-btn {
+        padding:16px 20px;
+        font-size:16px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="lang-selector">
-    <span>Seleccione idioma:</span>
-    <button onclick="setLanguage('es')">🇪🇸</button>
-    <button onclick="setLanguage('en')">🇺🇸</button>
-    <button onclick="setLanguage('pt')">🇵🇹</button>
+    <span id="select-language-text">Seleccione idioma:</span>
+    <button onclick="setLanguage('es')" title="Español">🇪🇸</button>
+    <button onclick="setLanguage('en')" title="English">🇺🇸</button>
+    <button onclick="setLanguage('pt')" title="Português">🇵🇹</button>
+    <button onclick="setLanguage('tr')" title="Türkçe">🇹🇷</button>
+    <button onclick="setLanguage('ru')" title="Русский">🇷🇺</button>
+    <button onclick="setLanguage('de')" title="Deutsch">🇩🇪</button>
   </div>
 
   <div class="container" role="main">
@@ -73,13 +233,17 @@
       <a href="/cap" class="btn primary" id="btn-own"></a>
       <a href="https://real-dogsled-d8a.notion.site/2799bf7f50958177b63adb311435ceb9" class="btn secondary" id="btn-search"></a>
     </div>
-      <img src="public/img/up_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
+    
+    <img src="public/img/up_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
+    
     <div class="map-wrap">
       <div class="map-frame">
         <iframe src="https://www.google.com/maps?q=36.5,24.0&z=9&output=embed" title="Mapa de Brega"></iframe>
       </div>
     </div>
-            <img src="public/img/down_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
+    
+    <img src="public/img/down_ornament.png" class="orn" alt="adorno de cabecera" onerror="this.style.display='none'"/>
+    
     <section>
       <h2 id="why-title"></h2>
       <div class="features" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:24px;">
@@ -96,10 +260,10 @@
 
     <section>
       <h2 id="how-title"></h2>
-      <p id="how-desc"></p>
+      <p id="how-desc" style="white-space: pre-line;"></p>
     </section>
 
-<a href="https://real-dogsled-d8a.notion.site/2799bf7f50958177b63adb311435ceb9" class="btn primary big-btn">Vamos en mar</a>
+    <a href="https://real-dogsled-d8a.notion.site/2799bf7f50958177b63adb311435ceb9" class="btn primary big-btn" id="big-btn-text"></a>
   </div>
 
   <footer>
@@ -108,38 +272,178 @@
       <a href="#"><img src="/public/img/mp.png" alt="MP"></a>
       <a href="#"><img src="/public/img/llogo.png" alt="LLogo"></a>
     </div>
-    <p>© <span id="year"></span> <a href="index.html" class="link">Brega.app</a> con Mercado Pago en Uruguay — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
-      <div style="font-size:13px;color:var(--muted);margin-top:6px">
-    Al hacer clic en «Pagar» aceptas nuestra 
-    <a href="/refund-es.html" class="link">política de reembolso</a> y 
-    <a href="/terms-es.html" class="link">términos de uso</a>.
-  </div>
+    <p>© <span id="year"></span> <a href="index.html" class="link">Brega.app</a> <span id="footer-text"></span> — <a href="mailto:hi@brega.app" class="link">hi@brega.app</a></p>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px" id="footer-legal">
+      Al hacer clic en «Pagar» aceptas nuestra 
+      <a href="/refund-es.html" class="link">política de reembolso</a> y 
+      <a href="/terms-es.html" class="link">términos de uso</a>.
+    </div>
   </footer>
-  <script>    document.getElementById('year').textContent = new Date().getFullYear();  </script></body></html>
 
   <script>
     const languages = {
-      es: { title: "Brega", subtitle: "Brega conecta a los amantes del mar con propietarios de embarcaciones. Recibe solicitudes directamente.", btnOwn: "Tengo un barco", btnSearch: "Busco un barco", whyTitle: "¿Por qué Brega?", ownerTitle: "Para propietarios de embarcaciones", ownerDesc: "Encuentra compañeros para tu viaje y gestiona tu embarcación sin intermediarios.", seekerTitle: "Para quienes alquilan", seekerDesc: "Busca embarcaciones cercanas y vive aventuras en el mar.", howTitle: "Cómo funciona", howDesc: "1. Elige tu rol — propietario o amante del mar.\n2. Completa el formulario.\n3. Conecta directamente.\n4. Zarpa." },
-      en: { title: "Brega", subtitle: "Brega connects sea lovers with boat owners. Receive requests directly.", btnOwn: "I have a boat", btnSearch: "I’m looking for a boat", whyTitle: "Why Brega?", ownerTitle: "For boat owners", ownerDesc: "Find companions for your trip and manage your boat without intermediaries.", seekerTitle: "For sea lovers", seekerDesc: "Find nearby boats and enjoy sea adventures.", howTitle: "How it works", howDesc: "1. Choose your role — owner or sea lover.\n2. Fill the form.\n3. Connect directly.\n4. Set sail." },
-      pt: { title: "Brega", subtitle: "Brega conecta amantes do mar com proprietários de embarcações. Receba pedidos diretamente.", btnOwn: "Tenho um barco", btnSearch: "Procuro um barco", whyTitle: "Por que Brega?", ownerTitle: "Para proprietários de embarcações", ownerDesc: "Encontre companheiros para sua viagem e gerencie seu barco sem intermediários.", seekerTitle: "Para amantes do mar", seekerDesc: "Encontre embarcações próximas e viva aventuras no mar.", howTitle: "Como funciona", howDesc: "1. Escolha seu papel — proprietário ou amante do mar.\n2. Preencha o formulário.\n3. Conecte-se diretamente.\n4. Zarpe." }
+      es: { 
+        title: "Brega", 
+        subtitle: "Brega conecta a los amantes del mar con propietarios de embarcaciones. Recibe solicitudes directamente.", 
+        btnOwn: "Tengo un barco", 
+        btnSearch: "Busco un barco", 
+        whyTitle: "¿Por qué Brega?", 
+        ownerTitle: "Para propietarios de embarcaciones", 
+        ownerDesc: "Encuentra compañeros para tu viaje y gestiona tu embarcación sin intermediarios.", 
+        seekerTitle: "Para quienes alquilan", 
+        seekerDesc: "Busca embarcaciones cercanas y vive aventuras en el mar.", 
+        howTitle: "Cómo funciona", 
+        howDesc: "1. Elige tu rol — propietario o amante del mar.\n2. Completa el formulario.\n3. Conecta directamente.\n4. Zarpa.",
+        bigBtn: "Vamos en mar",
+        footerText: "con Mercado Pago en Uruguay",
+        selectLang: "Seleccione idioma:",
+        legalText: "Al hacer clic en «Pagar» aceptas nuestra <a href=\"/refund-es.html\" class=\"link\">política de reembolso</a> y <a href=\"/terms-es.html\" class=\"link\">términos de uso</a>."
+      },
+      en: { 
+        title: "Brega", 
+        subtitle: "Brega connects sea lovers with boat owners. Receive requests directly.", 
+        btnOwn: "I have a boat", 
+        btnSearch: "I’m looking for a boat", 
+        whyTitle: "Why Brega?", 
+        ownerTitle: "For boat owners", 
+        ownerDesc: "Find companions for your trip and manage your boat without intermediaries.", 
+        seekerTitle: "For sea lovers", 
+        seekerDesc: "Find nearby boats and enjoy sea adventures.", 
+        howTitle: "How it works", 
+        howDesc: "1. Choose your role — owner or sea lover.\n2. Fill the form.\n3. Connect directly.\n4. Set sail.",
+        bigBtn: "Let's go to sea",
+        footerText: "with Mercado Pago in Uruguay",
+        selectLang: "Select language:",
+        legalText: "By clicking 'Pay' you accept our <a href=\"/refund-en.html\" class=\"link\">refund policy</a> and <a href=\"/terms-en.html\" class=\"link\">terms of use</a>."
+      },
+      pt: { 
+        title: "Brega", 
+        subtitle: "Brega conecta amantes do mar com proprietários de embarcações. Receba pedidos diretamente.", 
+        btnOwn: "Tenho um barco", 
+        btnSearch: "Procuro um barco", 
+        whyTitle: "Por que Brega?", 
+        ownerTitle: "Para proprietários de embarcações", 
+        ownerDesc: "Encontre companheiros para sua viagem e gerencie seu barco sem intermediários.", 
+        seekerTitle: "Para amantes do mar", 
+        seekerDesc: "Encontre embarcações próximas e viva aventuras no mar.", 
+        howTitle: "Como funciona", 
+        howDesc: "1. Escolha seu papel — proprietário ou amante do mar.\n2. Preencha o formulário.\n3. Conecte-se diretamente.\n4. Zarpe.",
+        bigBtn: "Vamos para o mar",
+        footerText: "com Mercado Pago no Uruguai",
+        selectLang: "Selecione o idioma:",
+        legalText: "Ao clicar em 'Pagar' você aceita nossa <a href=\"/refund-pt.html\" class=\"link\">política de reembolso</a> e <a href=\"/terms-pt.html\" class=\"link\">termos de uso</a>."
+      },
+      tr: { 
+        title: "Brega", 
+        subtitle: "Brega, deniz tutkunlarını tekne sahipleriyle buluşturur. Doğrudan talepler alın.", 
+        btnOwn: "Teknem var", 
+        btnSearch: "Tekne arıyorum", 
+        whyTitle: "Neden Brega?", 
+        ownerTitle: "Tekne sahipleri için", 
+        ownerDesc: "Yolculuğunuz için yol arkadaşları bulun ve teknenizi aracısız yönetin.", 
+        seekerTitle: "Deniz tutkunları için", 
+        seekerDesc: "Yakındaki tekneleri bulun ve deniz maceraları yaşayın.", 
+        howTitle: "Nasıl çalışır?", 
+        howDesc: "1. Rolünüzü seçin — sahip veya deniz tutkunu.\n2. Formu doldurun.\n3. Doğrudan bağlantı kurun.\n4. Denize açılın.",
+        bigBtn: "Denize gidelim",
+        footerText: "Uruguay'da Mercado Pago ile",
+        selectLang: "Dil seçin:",
+        legalText: "'Öde'ye tıklayarak <a href=\"/refund-tr.html\" class=\"link\">iade politikamızı</a> ve <a href=\"/terms-tr.html\" class=\"link\">kullanım şartlarımızı</a> kabul etmiş olursunuz."
+      },
+      ru: { 
+        title: "Brega", 
+        subtitle: "Brega соединяет любителей моря с владельцами лодок. Получайте запросы напрямую.", 
+        btnOwn: "У меня есть лодка", 
+        btnSearch: "Ищу лодку", 
+        whyTitle: "Почему Brega?", 
+        ownerTitle: "Для владельцев лодок", 
+        ownerDesc: "Найдите попутчиков для вашего путешествия и управляйте своей лодкой без посредников.", 
+        seekerTitle: "Для любителей моря", 
+        seekerDesc: "Найдите лодки поблизости и переживите морские приключения.", 
+        howTitle: "Как это работает", 
+        howDesc: "1. Выберите свою роль — владелец или любитель моря.\n2. Заполните форму.\n3. Свяжитесь напрямую.\n4. Выходите в море.",
+        bigBtn: "Выходим в море",
+        footerText: "с Mercado Pago в Уругвае",
+        selectLang: "Выберите язык:",
+        legalText: "Нажимая «Оплатить», вы принимаете нашу <a href=\"/refund-ru.html\" class=\"link\">политику возврата</a> и <a href=\"/terms-ru.html\" class=\"link\">условия использования</a>."
+      },
+      de: { 
+        title: "Brega", 
+        subtitle: "Brega verbindet Meeresliebhaber mit Bootsbesitzern. Erhalten Sie Anfragen direkt.", 
+        btnOwn: "Ich habe ein Boot", 
+        btnSearch: "Ich suche ein Boot", 
+        whyTitle: "Warum Brega?", 
+        ownerTitle: "Für Bootsbesitzer", 
+        ownerDesc: "Finden Sie Begleiter für Ihre Reise und verwalten Sie Ihr Boot ohne Zwischenhändler.", 
+        seekerTitle: "Für Meeresliebhaber", 
+        seekerDesc: "Finden Sie Boote in der Nähe und erleben Sie Meeresabenteuer.", 
+        howTitle: "So funktioniert's", 
+        howDesc: "1. Wählen Sie Ihre Rolle — Besitzer oder Meeresliebhaber.\n2. Füllen Sie das Formular aus.\n3. Verbinden Sie sich direkt.\n4. Legen Sie ab.",
+        bigBtn: "Aufs Meer fahren",
+        footerText: "mit Mercado Pago in Uruguay",
+        selectLang: "Sprache auswählen:",
+        legalText: "Durch Klicken auf 'Bezahlen' akzeptieren Sie unsere <a href=\"/refund-de.html\" class=\"link\">Rückerstattungsrichtlinie</a> und <a href=\"/terms-de.html\" class=\"link\">Nutzungsbedingungen</a>."
+      }
     };
 
     function setLanguage(lang) {
-      document.getElementById('title').innerText = languages[lang].title;
-      document.getElementById('subtitle').innerText = languages[lang].subtitle;
-      document.getElementById('btn-own').innerText = languages[lang].btnOwn;
-      document.getElementById('btn-search').innerText = languages[lang].btnSearch;
-      document.getElementById('why-title').innerText = languages[lang].whyTitle;
-      document.getElementById('owner-title').innerText = languages[lang].ownerTitle;
-      document.getElementById('owner-desc').innerText = languages[lang].ownerDesc;
-      document.getElementById('seeker-title').innerText = languages[lang].seekerTitle;
-      document.getElementById('seeker-desc').innerText = languages[lang].seekerDesc;
-      document.getElementById('how-title').innerText = languages[lang].howTitle;
-      document.getElementById('how-desc').innerText = languages[lang].howDesc;
+      const langData = languages[lang];
+      if (!langData) return;
+      
+      document.getElementById('title').innerText = langData.title;
+      document.getElementById('subtitle').innerText = langData.subtitle;
+      document.getElementById('btn-own').innerText = langData.btnOwn;
+      document.getElementById('btn-search').innerText = langData.btnSearch;
+      document.getElementById('why-title').innerText = langData.whyTitle;
+      document.getElementById('owner-title').innerText = langData.ownerTitle;
+      document.getElementById('owner-desc').innerText = langData.ownerDesc;
+      document.getElementById('seeker-title').innerText = langData.seekerTitle;
+      document.getElementById('seeker-desc').innerText = langData.seekerDesc;
+      document.getElementById('how-title').innerText = langData.howTitle;
+      document.getElementById('how-desc').innerText = langData.howDesc;
+      document.getElementById('big-btn-text').innerText = langData.bigBtn;
+      document.getElementById('footer-text').innerText = langData.footerText;
+      document.getElementById('select-language-text').innerText = langData.selectLang;
+      document.getElementById('footer-legal').innerHTML = langData.legalText;
+      
+      // Обновляем title страницы
+      if (lang === 'es') {
+        document.title = "Brega — Encuentra tu aventura en el mar";
+      } else if (lang === 'en') {
+        document.title = "Brega — Find your sea adventure";
+      } else if (lang === 'pt') {
+        document.title = "Brega — Encontre sua aventura no mar";
+      } else if (lang === 'tr') {
+        document.title = "Brega — Deniz maceranızı bulun";
+      } else if (lang === 'ru') {
+        document.title = "Brega — Найдите свое морское приключение";
+      } else if (lang === 'de') {
+        document.title = "Brega — Finden Sie Ihr Meer-Abenteuer";
+      }
+      
+      // Сохраняем выбор языка
+      localStorage.setItem('brega_lang', lang);
     }
 
-    setLanguage('es');
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Загружаем сохраненный язык или определяем по браузеру
+    function loadLanguage() {
+      const savedLang = localStorage.getItem('brega_lang');
+      const browserLang = navigator.language.slice(0, 2);
+      
+      if (savedLang && languages[savedLang]) {
+        setLanguage(savedLang);
+      } else if (languages[browserLang]) {
+        setLanguage(browserLang);
+      } else {
+        setLanguage('es');
+      }
+    }
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+      loadLanguage();
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
   </script>
 
 </body>
