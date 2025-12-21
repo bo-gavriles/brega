@@ -14,6 +14,8 @@
       --text-muted: #6b7c8f;
       --border-light: #d9e1ea;
       --bg-white: #ffffff;
+      --success: #10b981;
+      --error: #ef4444;
     }
 
     * {
@@ -28,6 +30,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      padding: 20px;
     }
 
     .card {
@@ -37,6 +40,7 @@
       padding: 28px 32px 24px;
       border-radius: 10px;
       border: 1px solid var(--border-light);
+      box-shadow: 0 4px 12px rgba(11, 44, 77, 0.08);
     }
 
     h1 {
@@ -50,6 +54,22 @@
       color: var(--text-muted);
       margin-bottom: 20px;
       max-width: 760px;
+      line-height: 1.5;
+    }
+
+    .data-usage-note {
+      background-color: #f0f7ff;
+      border-left: 3px solid var(--blue-light);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .data-usage-note strong {
+      color: var(--blue-deep);
     }
 
     .section {
@@ -78,52 +98,152 @@
       border: 1px solid var(--border-light);
       font-size: 14px;
       background: #fff;
+      transition: border-color 0.2s ease;
+    }
+
+    input:hover, select:hover {
+      border-color: #b0c4de;
     }
 
     input:focus, select:focus {
       outline: none;
       border-color: var(--blue-light);
+      box-shadow: 0 0 0 2px rgba(63, 169, 245, 0.1);
     }
 
     .helper {
       font-size: 12px;
       color: var(--text-muted);
       margin-top: 6px;
+      font-style: italic;
     }
 
     .footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 14px;
+      margin-top: 24px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-light);
     }
 
     .consent {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-left: 4px;
+    }
+
+    .consent input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 1px;
+      accent-color: var(--blue-light);
     }
 
     .consent a {
       color: var(--blue-light);
       text-decoration: none;
+      font-weight: 500;
+    }
+
+    .consent a:hover {
+      text-decoration: underline;
     }
 
     .submit {
       height: 42px;
-      padding: 0 28px;
-      border-radius: 6px;
+      padding: 0 32px;
+      border-radius: 8px;
       border: none;
-      background: linear-gradient(90deg, var(--blue-deep), var(--gold));
-      color: #1e90ff;
-      font-size: 14px;
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1a478a 100%);
+      color: white;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(11, 44, 77, 0.15);
+      letter-spacing: 0.3px;
+    }
+
+    .submit:hover {
+      background: linear-gradient(135deg, #0d3a6b 0%, #1e5cb8 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(11, 44, 77, 0.2);
+    }
+
+    .submit:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(11, 44, 77, 0.15);
+    }
+
+    .submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.success {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      display: block;
+    }
+
+    .message.error {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+
+    .required::after {
+      content: " *";
+      color: var(--error);
     }
 
     @media (max-width: 900px) {
       .grid-2 { grid-template-columns: 1fr; }
+      .card {
+        padding: 20px 24px;
+      }
+      .footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .consent {
+        margin-left: 0;
+      }
+      .submit {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .card {
+        padding: 16px 20px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .description, .data-usage-note {
+        font-size: 13px;
+      }
     }
   </style>
 </head>
@@ -136,66 +256,77 @@
       Boat owners will be able to see it and decide whether to accept it.
     </p>
 
-    <div class="section grid-2">
-      <div>
-        <label>Country</label>
-        <select id="country">
-          <option value="">Select country</option>
-          <option value="russia">Russia</option>
-          <option value="turkey">Turkey</option>
-          <option value="uruguay">Uruguay</option>
-        </select>
-      </div>
-
-      <div>
-        <label>Coastal city</label>
-        <select id="city" disabled>
-          <option value="">Select city</option>
-        </select>
-      </div>
+    <div class="data-usage-note">
+      <strong>How we use your data:</strong> Your contact information is shared only with verified boat owners who may accept your request. We use your preferences to match you with suitable boats and improve our service. You can manage your privacy settings in your account.
     </div>
 
-    <p class="helper">Available cities are limited and will expand soon.</p>
+    <form id="boatRequestForm" action="https://formspree.io/f/mdkqbpqz" method="POST">
+      <div class="section grid-2">
+        <div>
+          <label for="country" class="required">Country</label>
+          <select id="country" name="country" required>
+            <option value="">Select country</option>
+            <option value="russia">Russia</option>
+            <option value="turkey">Turkey</option>
+            <option value="uruguay">Uruguay</option>
+          </select>
+        </div>
 
-    <div class="section grid-2">
-      <div>
-        <label>Start date</label>
-        <input type="date" />
+        <div>
+          <label for="city" class="required">Coastal city</label>
+          <select id="city" name="city" disabled required>
+            <option value="">Select city</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label>Passengers</label>
-        <input type="number" min="1" />
-      </div>
-    </div>
 
-    <div class="section grid-2">
-      <div>
-        <label>Name</label>
-        <input type="text" />
-      </div>
-      <div>
-        <label>Email</label>
-        <input type="email" />
-      </div>
-    </div>
+      <p class="helper">Available cities are limited and will expand soon.</p>
 
-    <div class="section grid-2">
-      <div>
-        <label>Phone</label>
-        <input type="tel" />
+      <div class="section grid-2">
+        <div>
+          <label for="start_date" class="required">Start date</label>
+          <input type="date" id="start_date" name="start_date" required />
+        </div>
+        <div>
+          <label for="passengers" class="required">Passengers</label>
+          <input type="number" id="passengers" name="passengers" min="1" placeholder="e.g., 4" required />
+        </div>
       </div>
-      <div>
-        <label>Promo code</label>
-        <input type="text" />
-      </div>
-    </div>
 
-    <div class="footer">
-      <label class="consent">
-        <input type="checkbox" /> I agree to the <a href="#">Refund Policy and Terms of Use</a>
-      </label>
-      <button class="submit">Submit</button>
-    </div>
+      <div class="section grid-2">
+        <div>
+          <label for="name" class="required">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required />
+        </div>
+        <div>
+          <label for="email" class="required">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+      </div>
+
+      <div class="section grid-2">
+        <div>
+          <label for="phone" class="required">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" required />
+        </div>
+        <div>
+          <label for="promo_code">Promo code</label>
+          <input type="text" id="promo_code" name="promo_code" placeholder="Optional" />
+        </div>
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <div class="footer">
+        <label class="consent">
+          <input type="checkbox" name="consent" required /> 
+          <span>I agree to the <a href="#">Refund Policy and Terms of Use</a></span>
+        </label>
+        <button type="submit" class="submit" id="submitBtn">
+          Submit Request
+        </button>
+      </div>
+    </form>
   </div>
 
   <script>
@@ -207,13 +338,22 @@
 
     const countrySelect = document.getElementById('country');
     const citySelect = document.getElementById('city');
+    const form = document.getElementById('boatRequestForm');
+    const messageDiv = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
 
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('start_date').min = today;
+
+    // City selection logic
     countrySelect.addEventListener('change', () => {
       const country = countrySelect.value;
       citySelect.innerHTML = '<option value="">Select city</option>';
 
       if (!country) {
         citySelect.disabled = true;
+        citySelect.required = false;
         return;
       }
 
@@ -225,9 +365,74 @@
       });
 
       citySelect.disabled = false;
+      citySelect.required = true;
+    });
+
+    // Form submission handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Disable submit button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      messageDiv.style.display = 'none';
+      
+      try {
+        const formData = new FormData(form);
+        
+        // Send to Formspree
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          // Success
+          showMessage('Thank you! Your request has been submitted successfully. Boat owners will contact you soon.', 'success');
+          form.reset();
+          citySelect.disabled = true;
+          citySelect.required = false;
+        } else {
+          // Error from Formspree
+          const errorData = await response.json();
+          showMessage('There was an error submitting your request. Please try again later.', 'error');
+          console.error('Formspree error:', errorData);
+        }
+      } catch (error) {
+        // Network error
+        showMessage('Network error. Please check your connection and try again.', 'error');
+        console.error('Submission error:', error);
+      } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Request';
+      }
+    });
+
+    function showMessage(text, type) {
+      messageDiv.textContent = text;
+      messageDiv.className = `message ${type}`;
+      messageDiv.style.display = 'block';
+      
+      // Auto-hide success messages after 5 seconds
+      if (type === 'success') {
+        setTimeout(() => {
+          messageDiv.style.display = 'none';
+        }, 5000);
+      }
+    }
+
+    // Add form validation for city field
+    form.addEventListener('change', () => {
+      if (countrySelect.value && citySelect.disabled) {
+        citySelect.disabled = false;
+        citySelect.required = true;
+      }
     });
   </script>
 
 </body>
 </html>
-
