@@ -1,9 +1,25 @@
+# Boat Request Form — Combined View
+
+This document represents the **combined, production-ready version** of the boat request form for Brega.
+
+It is designed as:
+
+* Frontend-only
+* Self-contained (HTML + CSS + JS)
+* Ready to be placed in `/forms/boat-request/`
+
+---
+
+## index.html
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brega — Looking for a Boat</title>
+
   <style>
     :root {
       --blue-deep: #0b2c4d;
@@ -55,30 +71,6 @@
       margin-bottom: 18px;
     }
 
-    .section-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-
-    .radio-group {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
-    }
-
-    .radio-group label {
-      font-size: 14px;
-      color: var(--text-main);
-    }
-
-    .helper {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -93,29 +85,34 @@
       margin-bottom: 4px;
     }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="number"],
-    input[type="date"] {
+    input, select {
       width: 100%;
       height: 42px;
       padding: 0 12px;
       border-radius: 6px;
       border: 1px solid var(--border-light);
       font-size: 14px;
+      background: #fff;
     }
 
-    input:focus {
+    input:focus, select:focus {
       outline: none;
       border-color: var(--blue-light);
+    }
+
+    .helper {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
     }
 
     .footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .consent {
@@ -141,34 +138,47 @@
     }
 
     @media (max-width: 900px) {
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
+      .grid-2 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+
   <div class="card">
     <h1>I’m looking for a boat!</h1>
-    <p class="description">Once submitted, your request will be added to our active requests group. Boat owners will be able to see it and decide whether to accept it.</p>
-
-    <div class="section">
-      <div class="section-title">Where would you like to start your trip?</div>
-      <div class="radio-group">
-        <label><input type="radio" name="location" /> Punta Del Este</label>
-        <label><input type="radio" name="location" /> Montevideo</label>
-        <label><input type="radio" name="location" /> Other locations</label>
-      </div>
-      <div class="helper">We have just launched the application. For now, boats can only be searched in Uruguay, but it will soon be available worldwide.</div>
-    </div>
+    <p class="description">
+      Once submitted, your request will be added to our active requests group.
+      Boat owners will be able to see it and decide whether to accept it.
+    </p>
 
     <div class="section grid-2">
       <div>
-        <label>How many days are you planning to stay?</label>
+        <label>Country</label>
+        <select id="country">
+          <option value="">Select country</option>
+          <option value="russia">Russia</option>
+          <option value="turkey">Turkey</option>
+          <option value="uruguay">Uruguay</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Coastal city</label>
+        <select id="city" disabled>
+          <option value="">Select city</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="helper">Available cities are limited and will expand soon.</p>
+
+    <div class="section grid-2">
+      <div>
+        <label>Start date</label>
         <input type="date" />
       </div>
       <div>
-        <label>How many passengers?</label>
+        <label>Passengers</label>
         <input type="number" min="1" />
       </div>
     </div>
@@ -196,11 +206,55 @@
     </div>
 
     <div class="footer">
-      <div class="consent">
-        <label><input type="checkbox" /> I agree to the <a href="#">Refund Policy and Terms of Use</a></label>
-      </div>
+      <label class="consent">
+        <input type="checkbox" /> I agree to the <a href="#">Refund Policy and Terms of Use</a>
+      </label>
       <button class="submit">Submit</button>
     </div>
   </div>
+
+  <script>
+    const citiesByCountry = {
+      russia: ["Sochi", "Gelendzhik", "Anapa", "Vladivostok", "Kaliningrad"],
+      turkey: ["Bodrum", "Marmaris", "Fethiye", "Antalya", "Cesme"],
+      uruguay: ["Punta del Este", "Montevideo", "La Paloma", "Piriápolis"]
+    };
+
+    const countrySelect = document.getElementById('country');
+    const citySelect = document.getElementById('city');
+
+    countrySelect.addEventListener('change', () => {
+      const country = countrySelect.value;
+      citySelect.innerHTML = '<option value="">Select city</option>';
+
+      if (!country) {
+        citySelect.disabled = true;
+        return;
+      }
+
+      citiesByCountry[country].forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+      });
+
+      citySelect.disabled = false;
+    });
+  </script>
+
 </body>
 </html>
+```
+
+---
+
+## Placement Recommendation
+
+```
+/forms
+  /boat-request
+    index.html
+```
+
+This file is now ready to be committed directly into the repository.
