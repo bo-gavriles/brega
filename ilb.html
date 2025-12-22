@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brega — Looking for a Boat</title>
@@ -31,16 +32,19 @@
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
+      overflow-y: auto;
     }
 
     .card {
       background: var(--bg-white);
       max-width: 960px;
       width: 100%;
+      max-height: 95vh;
       padding: 28px 32px 24px;
       border-radius: 10px;
       border: 1px solid var(--border-light);
       box-shadow: 0 4px 12px rgba(11, 44, 77, 0.08);
+      overflow-y: auto;
     }
 
     h1 {
@@ -116,6 +120,19 @@
       color: var(--text-muted);
       margin-top: 6px;
       font-style: italic;
+    }
+
+    .budget-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+      padding-left: 4px;
+    }
+
+    .budget-note .minimum {
+      color: var(--error);
+      font-weight: 500;
     }
 
     .footer {
@@ -218,6 +235,7 @@
       .grid-2 { grid-template-columns: 1fr; }
       .card {
         padding: 20px 24px;
+        max-height: 90vh;
       }
       .footer {
         flex-direction: column;
@@ -237,6 +255,7 @@
       }
       .card {
         padding: 16px 20px;
+        max-height: 85vh;
       }
       h1 {
         font-size: 20px;
@@ -250,7 +269,7 @@
 <body>
 
   <div class="card">
-    <h1>I’m looking for a boat!</h1>
+    <h1>I'm looking for a boat!</h1>
     <p class="description">
       Once submitted, your request will be added to our active requests group.
       Boat owners will be able to see it and decide whether to accept it.
@@ -290,6 +309,29 @@
         <div>
           <label for="passengers" class="required">Passengers</label>
           <input type="number" id="passengers" name="passengers" min="1" placeholder="e.g., 4" required />
+        </div>
+      </div>
+
+      <!-- Новое поле: Планируемое количество дней -->
+      <div class="section">
+        <label for="duration" class="required">Planned duration</label>
+        <select id="duration" name="duration" required>
+          <option value="">Select duration</option>
+          <option value="couple_hours">A couple of hours</option>
+          <option value="half_day">Half day</option>
+          <option value="full_day">Full day</option>
+          <option value="three_days">Three days</option>
+          <option value="week">Week</option>
+          <option value="month">Month</option>
+        </select>
+      </div>
+
+      <!-- Новое поле: Бюджет -->
+      <div class="section">
+        <label for="budget" class="required">Estimated budget</label>
+        <input type="number" id="budget" name="budget" min="0" step="10" placeholder="e.g., 500" required />
+        <div class="budget-note">
+          Amount is in US dollars. <span class="minimum">We recommend a minimum donation of $100 to the boat owner who will host you.</span>
         </div>
       </div>
 
@@ -341,6 +383,7 @@
     const form = document.getElementById('boatRequestForm');
     const messageDiv = document.getElementById('message');
     const submitBtn = document.getElementById('submitBtn');
+    const budgetInput = document.getElementById('budget');
 
     // Set min date to today
     const today = new Date().toISOString().split('T')[0];
@@ -368,9 +411,25 @@
       citySelect.required = true;
     });
 
+    // Валидация бюджета
+    budgetInput.addEventListener('blur', () => {
+      const value = parseInt(budgetInput.value);
+      if (value && value < 100) {
+        showMessage('For a better chance of acceptance, consider increasing your budget to at least $100.', 'error');
+      }
+    });
+
     // Form submission handler
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      // Проверка бюджета
+      const budgetValue = parseInt(budgetInput.value);
+      if (budgetValue && budgetValue < 100) {
+        if (!confirm('Your budget is below the recommended minimum of $100. This may reduce your chances of acceptance. Do you want to submit anyway?')) {
+          return;
+        }
+      }
       
       // Disable submit button and show loading state
       submitBtn.disabled = true;
