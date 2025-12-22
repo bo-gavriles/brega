@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Brega — Sistema de órdenes</title>
+  <title>Brega — Order System</title>
   <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -46,6 +46,8 @@
     .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#041026;font-weight:700;cursor:pointer;text-decoration:none}
     .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e6eef6}
     .link{color:var(--accent);text-decoration:underline}
+    .payment-options {font-size: 13px; color: var(--muted); margin-top: 8px;}
+    .payment-options span {color: #fff; font-weight: 600;}
 
     footer{margin-top:18px;color:var(--muted);font-size:13px}
 
@@ -63,97 +65,104 @@
         <span style="display:none">BR</span>
       </div>
       <div>
-        <h1 id="title">Sistema de órdenes — Brega</h1>
-        <p class="lead">Recibe y acepta órdenes de pasajeros, asegura tu viaje y forma parte de la comunidad de capitanes de Brega</p>
+        <h1 id="title">Order System — Brega</h1>
+        <p class="lead">Receive and accept passenger orders, secure your trip, and join the Brega captains community</p>
       </div>
     </header>
 
     <div class="grid" aria-live="polite">
       <main>
-        <article class="card" aria-label="Información de órdenes">
+        <article class="card" aria-label="Order information">
           <div class="section">
-            <span class="pill">Cómo funcionan las órdenes</span>
+            <span class="pill">How orders work</span>
           </div>
 
           <div class="section">
-            <h2 style="margin:0 0 8px 0">Recibe órdenes al instante</h2>
-            <p class="small">Las solicitudes de pasajeros llegan directamente al correo que indiques. El primer capitán que pague y envíe el número de orden obtiene los datos completos del pasajero y asegura la reserva.</p>
+            <h2 style="margin:0 0 8px 0">Receive orders instantly</h2>
+            <p class="small">Passenger requests are sent directly to the email you provide. The first captain to pay and submit the order number gets the complete passenger details and secures the booking.</p>
           </div>
 
           <div class="section">
-            <h3 style="margin:0 0 8px 0">Pasos para recibir una orden:</h3>
+            <h3 style="margin:0 0 8px 0">Steps to receive an order:</h3>
             <div class="steps">
-              <div class="step"><div class="num">1</div><div><strong>Recibes la solicitud</strong><div class="small">La orden llega a tu correo registrado en Brega.</div></div></div>
-              <div class="step"><div class="num">2</div><div><strong>Procesas el pago</strong><div class="small">Realiza el pago y envía el número de orden para confirmar la reserva.</div></div></div>
-              <div class="step"><div class="num">3</div><div><strong>Obtienes los datos del pasajero</strong><div class="small">Una vez confirmado el pago, recibirás toda la información necesaria para el viaje.</div></div></div>
+              <div class="step"><div class="num">1</div><div><strong>You receive the request</strong><div class="small">The order arrives at the email registered in Brega.</div></div></div>
+              <div class="step"><div class="num">2</div><div><strong>Process the payment</strong><div class="small">Make the payment and send the order number to confirm the reservation.</div></div></div>
+              <div class="step"><div class="num">3</div><div><strong>Get passenger details</strong><div class="small">Once payment is confirmed, you'll receive all necessary information for the trip.</div></div></div>
             </div>
           </div>
 
           <div class="section">
-            <h3 style="margin:0 0 8px 0">Cómo unirte como capitán</h3>
-            <p class="small">Para formar parte de Brega y recibir órdenes, puedes registrarte enviando un correo a <a href="mailto:hi@brega.app" class="link">hi@brega.app</a> o completando el formulario de registro en nuestra web. Una vez aprobado, empezarás a recibir solicitudes al instante.</p>
+            <h3 style="margin:0 0 8px 0">How to join as a captain</h3>
+            <p class="small">To become part of Brega and start receiving orders, you can register by emailing <a href="mailto:hi@brega.app" class="link">hi@brega.app</a> or by completing the registration form on our website. Once approved, you'll begin receiving requests instantly.</p>
           </div>
 
           <div class="section">
-            <h3 style="margin:0 0 8px 0">Soporte y contacto</h3>
-            <p class="small">Si tienes dudas o problemas con una orden, contáctanos por correo o WhatsApp: <a href="mailto:hi@brega.app" class="link">hi@brega.app</a> / +598 967 444 21. Resolveremos cualquier inconveniente y garantizamos la seguridad de tus reservas.</p>
+            <h3 style="margin:0 0 8px 0">Support and contact</h3>
+            <p class="small">If you have questions or issues with an order, contact us by email or WhatsApp: <a href="mailto:hi@brega.app" class="link">hi@brega.app</a> / +598 967 444 21. We'll resolve any issues and guarantee the security of your bookings.</p>
           </div>
         </article>
       </main>
 
       <aside>
-        <div class="paybox card" role="region" aria-label="Panel lateral de órdenes">
+        <div class="paybox card" role="region" aria-label="Order side panel">
           <div style="display:flex;justify-content:space-between;align-items:center">
             <div>
-              <div class="muted">Costo por reserva</div>
-              <div class="price">990&nbsp;PESOS</div>
+              <div class="muted">Cost per booking</div>
+              <div class="price">25&nbsp;USD</div>
             </div>
             <div style="text-align:right">
-              <div class="muted">Método</div>
-              <div class="small">Mercado Pago</div>
+              <div class="muted">Payment method</div>
+              <div class="small">Card or alternative</div>
             </div>
+          </div>
+
+          <div class="payment-options">
+            <span>Available:</span> Credit/debit card • PayPal • Wire transfer • Crypto (ask us)
           </div>
 
           <div style="margin-top:14px;display:flex;gap:10px;flex-direction:column">
-            <a class="btn" href="http://link.mercadopago.com.uy/bregaapp" target="_blank" rel="noopener noreferrer" aria-label="Pagar con Mercado Pago">
+            <a class="btn" href="http://link.mercadopago.com.uy/bregaapp" target="_blank" rel="noopener noreferrer" aria-label="Pay with card or alternative">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                 <path d="M12 2L21 7v6c0 5-4 9-9 9s-9-4-9-9V7l9-5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              Pagar 990 PESOS
+              Pay 25 USD
             </a>
 
-            <a class="btn secondary" href="https://real-dogsled-d8a.notion.site/27d9bf7f509581e69834f7305376bb90" aria-label="Contactar soporte">Únete como capitán!</a>
+            <a class="btn secondary" href="https://real-dogsled-d8a.notion.site/27d9bf7f509581e69834f7305376bb90" aria-label="Contact support">Join as captain!</a>
 
-            <div style="font-size:13px;color:var(--muted);margin-top:6px">Al hacer clic en «Pagar» aceptas nuestra <a href="/refund-es.html" class="link">política de reembolso</a> y <a href="/terms-es.html" class="link">términos de uso</a>.</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:6px">By clicking "Pay" you accept our <a href="/refund.html" class="link">refund policy</a> and <a href="/terms.html" class="link">terms of use</a>.</div>
           </div>
 
           <footer>
-            <div style="margin-top:12px">¿Dudas? Podemos procesar tu orden manualmente y enviarte un enlace de pago por e-mail.</div>
+            <div style="margin-top:12px">Questions? We can process your order manually and send you a payment link by email.</div>
           </footer>
         </div>
       </aside>
     </div>
 
     <div id="contact" style="margin-top:18px" class="card">
-      <h3 style="margin-top:0">Contacto</h3>
+      <h3 style="margin-top:0">Contact</h3>
       <p class="small">E‑mail: <a href="mailto:hi@brega.app" class="link">hi@brega.app</a></p>
-      <p class="small">Teléfono / WhatsApp: +598 967 444 21</p>
-      <p class="small">RUT: 220517020014</p>
-      <p class="small">N° de Empresa: 0000008982125</p>
-      <p class="small">Jurisdicción: Uruguay</p>
+      <p class="small">Phone / WhatsApp: +598 967 444 21</p>
+      <p class="small">Tax ID: 220517020014</p>
+      <p class="small">Company Number: 0000008982125</p>
+      <p class="small">Jurisdiction: Uruguay</p>
     </div>
 
   </div>
-</body>
-  <footer>
-    <div>
-      <p>© <span id="year"></span> <a href="index.html" class="link">Brega.app</a> con Mercado Pago en Uruguay — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
-      <div style="font-size:13px;color:var(--muted);margin-top:6px">
-        Al hacer clic en «Pagar» aceptas nuestra 
-        <a href="/refund-es.html" class="link">política de reembolso</a> y 
-        <a href="/terms-es.html" class="link">términos de uso</a>.
-      </div>
+
+  <footer style="text-align:center;padding:20px;color:var(--muted);font-size:13px">
+    <p>© <span id="year">2024</span> <a href="index.html" class="link">Brega.app</a> with payment processing in Uruguay — <a href="mailto:hi@brega.app">hi@brega.app</a></p>
+    <div style="margin-top:6px">
+      By clicking "Pay" you accept our 
+      <a href="/refund.html" class="link">refund policy</a> and 
+      <a href="/terms.html" class="link">terms of use</a>.
     </div>
   </footer>
 
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>
