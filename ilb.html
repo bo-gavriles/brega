@@ -86,6 +86,12 @@
       gap: 16px;
     }
 
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
     label {
       font-size: 13px;
       font-weight: 500;
@@ -232,7 +238,7 @@
     }
 
     @media (max-width: 900px) {
-      .grid-2 { grid-template-columns: 1fr; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
       .card {
         padding: 20px 24px;
         max-height: 90vh;
@@ -288,6 +294,12 @@
             <option value="russia">Russia</option>
             <option value="turkey">Turkey</option>
             <option value="uruguay">Uruguay</option>
+            <option value="greece">Greece</option>
+            <option value="croatia">Croatia</option>
+            <option value="italy">Italy</option>
+            <option value="spain">Spain</option>
+            <option value="france">France</option>
+            <option value="usa">USA</option>
           </select>
         </div>
 
@@ -301,7 +313,7 @@
 
       <p class="helper">Available cities are limited and will expand soon.</p>
 
-      <div class="section grid-2">
+      <div class="section grid-3">
         <div>
           <label for="start_date" class="required">Start date</label>
           <input type="date" id="start_date" name="start_date" required />
@@ -309,6 +321,17 @@
         <div>
           <label for="passengers" class="required">Passengers</label>
           <input type="number" id="passengers" name="passengers" min="1" placeholder="e.g., 4" required />
+        </div>
+        <div>
+          <label for="boat_type" class="required">Boat type</label>
+          <select id="boat_type" name="boat_type" required>
+            <option value="">Select type</option>
+            <option value="sailboat">Sailboat ⛵</option>
+            <option value="motorboat">Motorboat 🚤</option>
+            <option value="yacht">Yacht 🛥️</option>
+            <option value="catamaran">Catamaran</option>
+            <option value="any">Any type</option>
+          </select>
         </div>
       </div>
 
@@ -357,6 +380,11 @@
         </div>
       </div>
 
+      <div class="section">
+        <label for="additional_notes">Additional notes (optional)</label>
+        <textarea id="additional_notes" name="additional_notes" rows="3" placeholder="Any special requests, preferences, or additional information..." style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border-light); font-size: 14px; font-family: inherit;"></textarea>
+      </div>
+
       <div id="message" class="message"></div>
 
       <div class="footer">
@@ -375,7 +403,13 @@
     const citiesByCountry = {
       russia: ["Sochi", "Gelendzhik", "Anapa", "Vladivostok", "Kaliningrad"],
       turkey: ["Bodrum", "Marmaris", "Fethiye", "Antalya", "Cesme"],
-      uruguay: ["Punta del Este", "Montevideo", "La Paloma", "Piriápolis"]
+      uruguay: ["Punta del Este", "Montevideo", "La Paloma", "Piriápolis"],
+      greece: ["Athens", "Mykonos", "Santorini", "Corfu", "Rhodes"],
+      croatia: ["Split", "Dubrovnik", "Zadar", "Rovinj", "Hvar"],
+      italy: ["Naples", "Rome", "Venice", "Sicily", "Sardinia"],
+      spain: ["Barcelona", "Mallorca", "Ibiza", "Valencia", "Malaga"],
+      france: ["Nice", "Cannes", "Saint-Tropez", "Marseille", "Corsica"],
+      usa: ["Miami", "Fort Lauderdale", "San Diego", "Seattle", "Boston"]
     };
 
     const countrySelect = document.getElementById('country');
@@ -400,15 +434,17 @@
         return;
       }
 
-      citiesByCountry[country].forEach(city => {
-        const option = document.createElement('option');
-        option.value = city;
-        option.textContent = city;
-        citySelect.appendChild(option);
-      });
+      if (citiesByCountry[country]) {
+        citiesByCountry[country].forEach(city => {
+          const option = document.createElement('option');
+          option.value = city.toLowerCase().replace(/\s+/g, '_');
+          option.textContent = city;
+          citySelect.appendChild(option);
+        });
 
-      citySelect.disabled = false;
-      citySelect.required = true;
+        citySelect.disabled = false;
+        citySelect.required = true;
+      }
     });
 
     // Валидация бюджета
@@ -439,6 +475,11 @@
       try {
         const formData = new FormData(form);
         
+        // Добавляем человекочитаемое название типа лодки
+        const boatTypeSelect = document.getElementById('boat_type');
+        const selectedOption = boatTypeSelect.options[boatTypeSelect.selectedIndex];
+        formData.append('boat_type_display', selectedOption.text);
+        
         // Send to Formspree
         const response = await fetch(form.action, {
           method: 'POST',
@@ -454,6 +495,9 @@
           form.reset();
           citySelect.disabled = true;
           citySelect.required = false;
+          
+          // Reset date to today
+          document.getElementById('start_date').value = today;
         } else {
           // Error from Formspree
           const errorData = await response.json();
@@ -491,6 +535,9 @@
         citySelect.required = true;
       }
     });
+
+    // Set initial date value
+    document.getElementById('start_date').value = today;
   </script>
 
 </body>
