@@ -655,21 +655,25 @@
             const form = document.getElementById('boatRequestForm');
             
             let targetEndpoint;
+            let isCaptainEndpoint = false; // flag
             
-            // Маршрутизация по странам
+            // cnt
             if (selectedCountry === 'turkey') {
                 targetEndpoint = 'https://formspree.io/f/xdaozyzz'; // Турция
+                isCaptainEndpoint = true;
             } else if (selectedCountry === 'uruguay') {
                 targetEndpoint = 'https://formspree.io/f/xkonbpqo'; // Уругвай
+                isCaptainEndpoint = true;
             } else {
                 targetEndpoint = 'https://formspree.io/f/xpqajnbn'; // Все остальные страны (текущий)
+                isCaptainEndpoint = false;
             }
             
-            // Устанавливаем нужный action формы
+            // action format
             form.action = targetEndpoint;
-            console.log(`Отправляем в ${selectedCountry} через ${targetEndpoint}`);
+            console.log(`Отправляем в ${selectedCountry} через ${targetEndpoint}, isCaptain: ${isCaptainEndpoint}`);
             
-            // Проверка бюджета
+            // budget
             const budgetValue = parseInt(budgetInput.value);
             if (budgetValue && budgetValue < 100) {
                 if (!confirm('Your budget is below the recommended minimum of $100. This may reduce your chances of acceptance. Do you want to submit anyway?')) {
@@ -685,12 +689,21 @@
             try {
                 const formData = new FormData(form);
                 
-                // Добавляем человекочитаемое название типа лодки
+                // t boat
                 const boatTypeSelect = document.getElementById('boat_type');
                 const selectedOption = boatTypeSelect.options[boatTypeSelect.selectedIndex];
                 formData.append('boat_type_display', selectedOption.text);
                 
-                // Send to Formspree endpoint (с учетом маршрутизации)
+                // Check k
+                if (isCaptainEndpoint) {
+                    console.log('Удаляем контактные данные для капитанов');
+                    formData.delete('email');
+                    formData.delete('phone');
+                    // C data
+                    formData.append('recipient', 'captains');
+                }
+                
+                // Send to Formspree endpoint 
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -701,7 +714,11 @@
                 
                 if (response.ok) {
                     // Success
-                    showMessage('Thank you! Your request has been submitted successfully. Boat owners will contact you soon.', 'success', finalMessage);
+                    const message = isCaptainEndpoint 
+                        ? 'Thank you! Your request has been submitted successfully. Captains in ' + selectedCountry + ' will review your application.'
+                        : 'Thank you! Your request has been submitted successfully. Boat owners will contact you soon.';
+                    
+                    showMessage(message, 'success', finalMessage);
                     
                     // Reset form after 5 seconds
                     setTimeout(() => {
