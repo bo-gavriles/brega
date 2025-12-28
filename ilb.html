@@ -645,9 +645,29 @@
             }
         });
 
-        // Form submission handler
+        // НАСТРОЙКА МАРШРУТИЗАЦИИ ПО СТРАНАМ ПЕРЕД ОТПРАВКОЙ
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // 1. Определяем страну и меняем action формы
+            const countrySelect = document.getElementById('country');
+            const selectedCountry = countrySelect.value;
+            const form = document.getElementById('boatRequestForm');
+            
+            let targetEndpoint;
+            
+            // Маршрутизация по странам
+            if (selectedCountry === 'turkey') {
+                targetEndpoint = 'https://formspree.io/f/xdaozyzz'; // Турция
+            } else if (selectedCountry === 'uruguay') {
+                targetEndpoint = 'https://formspree.io/f/xkonbpqo'; // Уругвай
+            } else {
+                targetEndpoint = 'https://formspree.io/f/xpqajnbn'; // Все остальные страны (текущий)
+            }
+            
+            // Устанавливаем нужный action формы
+            form.action = targetEndpoint;
+            console.log(`Отправляем в ${selectedCountry} через ${targetEndpoint}`);
             
             // Проверка бюджета
             const budgetValue = parseInt(budgetInput.value);
@@ -670,8 +690,8 @@
                 const selectedOption = boatTypeSelect.options[boatTypeSelect.selectedIndex];
                 formData.append('boat_type_display', selectedOption.text);
                 
-                // Send to main Formspree endpoint
-                const response = await fetch(fullSubmitEndpoint, {
+                // Send to Formspree endpoint (с учетом маршрутизации)
+                const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -694,6 +714,8 @@
                         prevBtn.disabled = true;
                         // Reset date to today
                         document.getElementById('start_date').value = today;
+                        // Сбрасываем action формы на дефолтный
+                        form.action = 'https://formspree.io/f/xpqajnbn';
                     }, 5000);
                 } else {
                     // Error from Formspree
