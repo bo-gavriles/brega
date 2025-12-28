@@ -6,6 +6,7 @@
     <title>Brega — Looking for a Boat</title>
     <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
     <style>
+        /* Стили остаются без изменений */
         :root {
             --blue-deep: #0b2c4d;
             --blue-light: #3fa9f5;
@@ -652,12 +653,11 @@
             // 1. Определяем страну и меняем action формы
             const countrySelect = document.getElementById('country');
             const selectedCountry = countrySelect.value;
-            const form = document.getElementById('boatRequestForm');
             
             let targetEndpoint;
-            let isCaptainEndpoint = false; // flag
+            let isCaptainEndpoint = false; // Флаг для определения, отправляем ли капитанам
             
-            // cnt
+            // Маршрутизация по странам
             if (selectedCountry === 'turkey') {
                 targetEndpoint = 'https://formspree.io/f/xdaozyzz'; // Турция
                 isCaptainEndpoint = true;
@@ -669,14 +669,18 @@
                 isCaptainEndpoint = false;
             }
             
-            // action format
+            // Устанавливаем нужный action формы
             form.action = targetEndpoint;
             console.log(`Отправляем в ${selectedCountry} через ${targetEndpoint}, isCaptain: ${isCaptainEndpoint}`);
             
-            // budget
+            // Проверка бюджета
             const budgetValue = parseInt(budgetInput.value);
             if (budgetValue && budgetValue < 100) {
                 if (!confirm('Your budget is below the recommended minimum of $100. This may reduce your chances of acceptance. Do you want to submit anyway?')) {
+                    // Восстанавливаем кнопки
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = 'Submit';
+                    prevBtn.disabled = false;
                     return;
                 }
             }
@@ -689,21 +693,21 @@
             try {
                 const formData = new FormData(form);
                 
-                // t boat
+                // Добавляем человекочитаемое название типа лодки
                 const boatTypeSelect = document.getElementById('boat_type');
                 const selectedOption = boatTypeSelect.options[boatTypeSelect.selectedIndex];
                 formData.append('boat_type_display', selectedOption.text);
                 
-                // Check k
+                // Если отправляем капитанам (Турция, Уругвай) - удаляем email и phone
                 if (isCaptainEndpoint) {
                     console.log('Удаляем контактные данные для капитанов');
                     formData.delete('email');
                     formData.delete('phone');
-                    // C data
+                    // Добавляем пометку, что это данные для капитанов
                     formData.append('recipient', 'captains');
                 }
                 
-                // Send to Formspree endpoint 
+                // Send to Formspree endpoint (с учетом маршрутизации)
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -737,14 +741,17 @@
                 } else {
                     // Error from Formspree
                     showMessage('There was an error submitting your request. Please try again later.', 'error', finalMessage);
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = 'Submit';
+                    prevBtn.disabled = false;
                 }
             } catch (error) {
                 // Network error
+                console.error('Network error:', error);
                 showMessage('Network error. Please check your connection and try again.', 'error', finalMessage);
-            } finally {
-                // Re-enable submit button
                 nextBtn.disabled = false;
                 nextBtn.textContent = 'Submit';
+                prevBtn.disabled = false;
             }
         });
 
