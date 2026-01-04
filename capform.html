@@ -1,277 +1,743 @@
-let currentStep = 1;
-const totalSteps = 6;
-const form = document.getElementById('captainRegistrationForm');
-const steps = document.querySelectorAll('.form-step');
-const progressCircles = document.querySelectorAll('.step-circle');
-const progressLabels = document.querySelectorAll('.step-label');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const submitBtn = document.getElementById('submitBtn');
-const finalMessage = document.getElementById('finalMessage');
-
-// Character counters
-document.getElementById('boat_name').addEventListener('input', function() {
-    document.getElementById('name_counter').textContent = this.value.length;
-});
-
-document.getElementById('operating_areas').addEventListener('input', function() {
-    document.getElementById('areas_counter').textContent = this.value.length;
-});
-
-document.getElementById('experience').addEventListener('input', function() {
-    document.getElementById('exp_counter').textContent = this.value.length;
-});
-
-// Initialize counters
-document.getElementById('name_counter').textContent = 
-    document.getElementById('boat_name').value.length;
-
-function updateProgress() {
-    // Update step circles
-    progressCircles.forEach((circle, index) => {
-        if (index + 1 <= currentStep) {
-            circle.classList.add('active');
-        } else {
-            circle.classList.remove('active');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brega — Captain Registration</title>
+    <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
+    <style>
+        :root {
+            --blue-deep: #0b2c4d;
+            --blue-light: #3fa9f5;
+            --gold: #c9a24d;
+            --text-main: #0b2c4d;
+            --text-muted: #6b7c8f;
+            --border-light: #d9e1ea;
+            --bg-white: #ffffff;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
         }
-    });
 
-    // Update step labels
-    progressLabels.forEach((label, index) => {
-        if (index + 1 <= currentStep) {
-            label.classList.add('active');
-        } else {
-            label.classList.remove('active');
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
-    });
 
-    // Update buttons
-    prevBtn.disabled = currentStep === 1;
-    
-    if (currentStep === totalSteps) {
-        nextBtn.textContent = 'Submit';
-        nextBtn.type = 'button';
-    } else {
-        nextBtn.textContent = 'Next';
-        nextBtn.type = 'button';
-    }
-
-    // Show current step
-    steps.forEach(step => {
-        if (parseInt(step.dataset.step) === currentStep) {
-            step.classList.add('active');
-        } else {
-            step.classList.remove('active');
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-    });
-}
 
-function validateStep(step) {
-    const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
-    const requiredFields = currentStepElement.querySelectorAll('[required]');
-    
-    for (let field of requiredFields) {
-        // For checkboxes, check if they're checked
-        if (field.type === 'checkbox') {
-            if (!field.checked) {
-                showStepMessage(`Please check the required checkbox: "${field.parentElement.textContent.trim()}"`, 'error');
-                field.focus();
-                return false;
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-light);
+            z-index: 1;
+        }
+
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .step-circle.active {
+            background: var(--blue-light);
+            border-color: var(--blue-light);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .step-label.active {
+            color: var(--blue-deep);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--bg-white);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .step-description {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        label.required::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            font-size: 14px;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--blue-light);
+            box-shadow: 0 0 0 3px rgba(63, 169, 245, 0.1);
+        }
+
+        .boat-type-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .boat-type-option {
+            position: relative;
+        }
+
+        .boat-type-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .boat-type-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .boat-type-label:hover {
+            border-color: var(--blue-light);
+            background: rgba(63, 169, 245, 0.05);
+        }
+
+        .boat-type-option input:checked + .boat-type-label {
+            border-color: var(--blue-light);
+            background: rgba(63, 169, 245, 0.1);
+        }
+
+        .boat-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .boat-name {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #f8fafc;
+            border-color: var(--blue-light);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue-deep) 0%, #1a478a 100%);
+            color: white;
+            padding: 12px 32px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #0d3a6b 0%, #1e5cb8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(11, 44, 77, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .location-field {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .counter {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .counter.error {
+            color: var(--error);
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            display: block;
+        }
+
+        .message.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                max-width: 100%;
             }
-        } 
-        // For radio buttons in step 3 (boat type)
-        else if (field.name === 'boat_type' && step === 3) {
-            const boatTypeSelected = currentStepElement.querySelector('input[name="boat_type"]:checked');
-            if (!boatTypeSelected) {
-                showStepMessage('Please select your boat type', 'error');
-                return false;
+            
+            .card {
+                padding: 24px;
+            }
+            
+            .boat-type-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .location-field {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
-        // For other fields, check if they have value
-        else if (!field.value.trim()) {
-            showStepMessage(`Please fill in the required field: "${field.previousElementSibling ? field.previousElementSibling.textContent.replace(' *', '') : 'This field'}"`, 'error');
-            field.focus();
-            return false;
-        }
-        
-        // Email validation
-        if (field.type === 'email' && field.value.trim()) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(field.value)) {
-                showStepMessage('Please enter a valid email address', 'error');
-                field.focus();
-                return false;
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="progress-bar">
+            <div class="progress-step">
+                <div class="step-circle active">1</div>
+                <div class="step-label active">Boat Name</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle">2</div>
+                <div class="step-label">Boat Details</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle">3</div>
+                <div class="step-label">Boat Type</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle">4</div>
+                <div class="step-label">Location</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle">5</div>
+                <div class="step-label">Contact Info</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle">6</div>
+                <div class="step-label">Complete</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <form id="captainRegistrationForm" action="https://formspree.io/f/mdknqkbg" method="POST">
+                <!-- Step 1: Boat Name -->
+                <div class="form-step active" data-step="1">
+                    <h2 class="step-title">Boat Name</h2>
+                    <p class="step-description">
+                        Register your boat and basic details once, and you'll receive email notifications about new boat search requests.
+                        You'll be able to contact the user who submitted the request and offer your boat.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label for="boat_name" class="required">Boat Name</label>
+                        <input type="text" id="boat_name" name="boat_name" required maxlength="50" placeholder="e.g., Sea Explorer">
+                        <div class="counter"><span id="name_counter">0</span>/50</div>
+                    </div>
+                    
+                    <p class="helper-text">6 simple questions and you're all set. 1/6</p>
+                </div>
+
+                <!-- Step 2: Boat Details -->
+                <div class="form-step" data-step="2">
+                    <h2 class="step-title">Boat Details</h2>
+                    <p class="step-description">
+                        Provide the basic specifications of your boat. You can complete the rest later!
+                    </p>
+                    
+                    <div class="form-group">
+                        <label for="boat_brand" class="required">Brand, Model and Year</label>
+                        <input type="text" id="boat_brand" name="boat_brand" required placeholder="e.g., Beneteau Oceanis 46.1 - 2020">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="boat_length">Length (feet/meters)</label>
+                        <input type="text" id="boat_length" name="boat_length" placeholder="e.g., 46ft / 14m">
+                    </div>
+                    
+                    <p class="helper-text">The rest can be completed later! 2/6</p>
+                </div>
+
+                <!-- Step 3: Boat Type -->
+                <div class="form-step" data-step="3">
+                    <h2 class="step-title">Boat Type</h2>
+                    <p class="step-description">
+                        Select the type of your boat. This helps us match you with the right passengers.
+                    </p>
+                    
+                    <div class="boat-type-options">
+                        <div class="boat-type-option">
+                            <input type="radio" id="type_sailboat" name="boat_type" value="sailboat" required>
+                            <label for="type_sailboat" class="boat-type-label">
+                                <div class="boat-icon">⛵</div>
+                                <div class="boat-name">Sailboat</div>
+                            </label>
+                        </div>
+                        
+                        <div class="boat-type-option">
+                            <input type="radio" id="type_motorboat" name="boat_type" value="motorboat">
+                            <label for="type_motorboat" class="boat-type-label">
+                                <div class="boat-icon">🚤</div>
+                                <div class="boat-name">Motorboat</div>
+                            </label>
+                        </div>
+                        
+                        <div class="boat-type-option">
+                            <input type="radio" id="type_yacht" name="boat_type" value="yacht">
+                            <label for="type_yacht" class="boat-type-label">
+                                <div class="boat-icon">🛥️</div>
+                                <div class="boat-name">Yacht</div>
+                            </label>
+                        </div>
+                        
+                        <div class="boat-type-option">
+                            <input type="radio" id="type_catamaran" name="boat_type" value="catamaran">
+                            <label for="type_catamaran" class="boat-type-label">
+                                <div class="boat-icon">⛵</div>
+                                <div class="boat-name">Catamaran</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <p class="helper-text">3/6</p>
+                </div>
+
+                <!-- Step 4: Location -->
+                <div class="form-step" data-step="4">
+                    <h2 class="step-title">Location</h2>
+                    <p class="step-description">
+                        Where is your boat based? This helps passengers find boats in their desired area.
+                    </p>
+                    
+                    <div class="form-group location-field">
+                        <div>
+                            <label for="country" class="required">Country</label>
+                            <select id="country" name="country" required>
+                                <option value="">Select country</option>
+                                <option value="russia">Russia</option>
+                                <option value="turkey">Turkey</option>
+                                <option value="uruguay">Uruguay</option>
+                                <option value="greece">Greece</option>
+                                <option value="croatia">Croatia</option>
+                                <option value="italy">Italy</option>
+                                <option value="spain">Spain</option>
+                                <option value="france">France</option>
+                                <option value="usa">USA</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="city" class="required">City/Marina</label>
+                            <input type="text" id="city" name="city" required placeholder="e.g., Sochi Marina">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="operating_areas">Operating Areas</label>
+                        <textarea id="operating_areas" name="operating_areas" rows="3" placeholder="Where do you usually operate? e.g., Black Sea coast, Mediterranean, etc." maxlength="200"></textarea>
+                        <div class="counter"><span id="areas_counter">0</span>/200</div>
+                    </div>
+                    
+                    <p class="helper-text">4/6</p>
+                </div>
+
+                <!-- Step 5: Contact Information -->
+                <div class="form-step" data-step="5">
+                    <h2 class="step-title">Contact Information</h2>
+                    <p class="step-description">
+                        We'll mainly communicate by email, where we'll send the complete form and notify you about new incoming requests.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="captain@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="required">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+1 (123) 456-7890">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="captain_name" class="required">Captain's Name</label>
+                        <input type="text" id="captain_name" name="captain_name" required placeholder="Full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Experience (Optional)</label>
+                        <textarea id="experience" name="experience" rows="3" placeholder="Briefly describe your boating experience" maxlength="300"></textarea>
+                        <div class="counter"><span id="exp_counter">0</span>/300</div>
+                    </div>
+                    
+                    <p class="helper-text">5/6</p>
+                </div>
+
+                <!-- Step 6: Confirmation -->
+                <div class="form-step" data-step="6">
+                    <h2 class="step-title">Complete Registration</h2>
+                    <p class="step-description">
+                        Review your information and submit your registration. You'll receive a confirmation email with next steps.
+                    </p>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="terms" required>
+                            I agree to receive notifications about new boat search requests
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="privacy" required>
+                            I have read and agree to the <a href="/terms.html" target="_blank">Terms of Service</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <div id="finalMessage" class="message" style="display: none;"></div>
+                    
+                    <p class="helper-text">6/6 - Ready to set sail!</p>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                </div>
+
+                <!-- Hidden Submit Button -->
+                <button type="submit" id="submitBtn" style="display: none;">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 6;
+        const form = document.getElementById('captainRegistrationForm');
+        const steps = document.querySelectorAll('.form-step');
+        const progressCircles = document.querySelectorAll('.step-circle');
+        const progressLabels = document.querySelectorAll('.step-label');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const finalMessage = document.getElementById('finalMessage');
+
+        // Character counters
+        document.getElementById('boat_name').addEventListener('input', function() {
+            document.getElementById('name_counter').textContent = this.value.length;
+        });
+
+        document.getElementById('operating_areas').addEventListener('input', function() {
+            document.getElementById('areas_counter').textContent = this.value.length;
+        });
+
+        document.getElementById('experience').addEventListener('input', function() {
+            document.getElementById('exp_counter').textContent = this.value.length;
+        });
+
+        // Initialize counters
+        document.getElementById('name_counter').textContent = 
+            document.getElementById('boat_name').value.length;
+
+        function updateProgress() {
+            // Update step circles
+            progressCircles.forEach((circle, index) => {
+                if (index + 1 === currentStep) {
+                    circle.classList.add('active');
+                } else if (index + 1 < currentStep) {
+                    circle.classList.add('active');
+                } else {
+                    circle.classList.remove('active');
+                }
+            });
+
+            // Update step labels
+            progressLabels.forEach((label, index) => {
+                if (index + 1 === currentStep || index + 1 < currentStep) {
+                    label.classList.add('active');
+                } else {
+                    label.classList.remove('active');
+                }
+            });
+
+            // Update buttons
+            prevBtn.disabled = currentStep === 1;
+            
+            if (currentStep === totalSteps) {
+                nextBtn.textContent = 'Submit';
+            } else {
+                nextBtn.textContent = 'Next';
             }
+
+            // Show current step
+            steps.forEach(step => {
+                if (parseInt(step.dataset.step) === currentStep) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
         }
-        
-        // Phone validation (basic)
-        if (field.type === 'tel' && field.value.trim()) {
-            const phoneRegex = /^[\d\s\-\+\(\)]{10,}$/;
-            if (!phoneRegex.test(field.value.replace(/\s/g, ''))) {
-                showStepMessage('Please enter a valid phone number', 'error');
-                field.focus();
-                return false;
+
+        function validateStep(step) {
+            const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
+            const requiredFields = currentStepElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    field.focus();
+                    return false;
+                }
+                
+                // Email validation
+                if (field.type === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(field.value)) {
+                        field.focus();
+                        return false;
+                    }
+                }
             }
+            
+            // Special validation for boat type
+            if (step === 3) {
+                const boatTypeSelected = currentStepElement.querySelector('input[name="boat_type"]:checked');
+                if (!boatTypeSelected) {
+                    alert('Please select your boat type');
+                    return false;
+                }
+            }
+            
+            return true;
         }
-    }
-    
-    return true;
-}
 
-function showStepMessage(text, type) {
-    // Clear any existing messages
-    const existingMessage = document.querySelector('.step-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
-    
-    // Create message element
-    const message = document.createElement('div');
-    message.className = `message ${type} step-message`;
-    message.textContent = text;
-    message.style.marginTop = '10px';
-    message.style.marginBottom = '10px';
-    
-    // Insert message after the step description
-    const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
-    const stepDescription = currentStepElement.querySelector('.step-description');
-    if (stepDescription) {
-        stepDescription.parentNode.insertBefore(message, stepDescription.nextSibling);
-    } else {
-        const stepTitle = currentStepElement.querySelector('.step-title');
-        stepTitle.parentNode.insertBefore(message, stepTitle.nextSibling);
-    }
-    
-    // Auto-remove message after 5 seconds
-    setTimeout(() => {
-        if (message.parentNode) {
-            message.remove();
-        }
-    }, 5000);
-}
-
-nextBtn.addEventListener('click', function() {
-    if (!validateStep(currentStep)) {
-        return;
-    }
-    
-    if (currentStep < totalSteps) {
-        currentStep++;
-        updateProgress();
-        // Clear any step messages when moving to next step
-        const existingMessage = document.querySelector('.step-message');
-        if (existingMessage) {
-            existingMessage.remove();
-        }
-    } else {
-        // Submit form
-        submitBtn.click();
-    }
-});
-
-prevBtn.addEventListener('click', function() {
-    if (currentStep > 1) {
-        currentStep--;
-        updateProgress();
-        // Clear any step messages when going back
-        const existingMessage = document.querySelector('.step-message');
-        if (existingMessage) {
-            existingMessage.remove();
-        }
-    }
-});
-
-// Form submission
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    // Final validation before submission
-    if (!validateStep(currentStep)) {
-        return;
-    }
-    
-    // Disable buttons
-    nextBtn.disabled = true;
-    prevBtn.disabled = true;
-    nextBtn.textContent = 'Submitting...';
-    
-    try {
-        const formData = new FormData(form);
-        
-        // Get boat type display value
-        const boatTypeSelected = document.querySelector('input[name="boat_type"]:checked');
-        if (boatTypeSelected) {
-            const boatTypeLabel = boatTypeSelected.nextElementSibling.querySelector('.boat-name').textContent;
-            formData.append('boat_type_display', boatTypeLabel);
-        }
-        
-        // Send to Formspree
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
+        nextBtn.addEventListener('click', function() {
+            if (!validateStep(currentStep)) {
+                return;
+            }
+            
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateProgress();
+            } else {
+                // Submit form
+                submitBtn.click();
             }
         });
-        
-        if (response.ok) {
-            // Success
-            finalMessage.textContent = 'Thank you! Your registration has been submitted successfully. You will receive a confirmation email shortly.';
-            finalMessage.className = 'message success';
-            finalMessage.style.display = 'block';
-            
-            // Reset form after 5 seconds
-            setTimeout(() => {
-                form.reset();
-                currentStep = 1;
+
+        prevBtn.addEventListener('click', function() {
+            if (currentStep > 1) {
+                currentStep--;
                 updateProgress();
-                finalMessage.style.display = 'none';
-                nextBtn.disabled = false;
-                nextBtn.textContent = 'Next';
-                prevBtn.disabled = true;
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Disable buttons
+            nextBtn.disabled = true;
+            prevBtn.disabled = true;
+            nextBtn.textContent = 'Submitting...';
+            
+            try {
+                const formData = new FormData(form);
                 
-                // Reset counters
-                document.getElementById('name_counter').textContent = '0';
-                document.getElementById('areas_counter').textContent = '0';
-                document.getElementById('exp_counter').textContent = '0';
-            }, 5000);
-        } else {
-            // Error
-            finalMessage.textContent = 'There was an error submitting your registration. Please try again later.';
-            finalMessage.className = 'message error';
-            finalMessage.style.display = 'block';
-            nextBtn.disabled = false;
-            nextBtn.textContent = currentStep === totalSteps ? 'Submit' : 'Next';
-            prevBtn.disabled = currentStep === 1;
-        }
-    } catch (error) {
-        // Network error
-        finalMessage.textContent = 'Network error. Please check your connection and try again.';
-        finalMessage.className = 'message error';
-        finalMessage.style.display = 'block';
-        nextBtn.disabled = false;
-        nextBtn.textContent = currentStep === totalSteps ? 'Submit' : 'Next';
-        prevBtn.disabled = currentStep === 1;
-        console.error('Form submission error:', error);
-    }
-});
+                // Send to Formspree
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success
+                    finalMessage.textContent = 'Thank you! Your registration has been submitted successfully. You will receive a confirmation email shortly.';
+                    finalMessage.className = 'message success';
+                    finalMessage.style.display = 'block';
+                    
+                    // Reset form after 5 seconds
+                    setTimeout(() => {
+                        form.reset();
+                        currentStep = 1;
+                        updateProgress();
+                        finalMessage.style.display = 'none';
+                        nextBtn.disabled = false;
+                        nextBtn.textContent = 'Next';
+                        prevBtn.disabled = true;
+                    }, 5000);
+                } else {
+                    // Error
+                    finalMessage.textContent = 'There was an error submitting your registration. Please try again later.';
+                    finalMessage.className = 'message error';
+                    finalMessage.style.display = 'block';
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = 'Submit';
+                }
+            } catch (error) {
+                // Network error
+                finalMessage.textContent = 'Network error. Please check your connection and try again.';
+                finalMessage.className = 'message error';
+                finalMessage.style.display = 'block';
+                nextBtn.disabled = false;
+                nextBtn.textContent = 'Submit';
+            }
+        });
 
-// Add Enter key support for moving between steps
-form.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        if (currentStep < totalSteps) {
-            nextBtn.click();
-        }
-    }
-});
-
-// Initialize
-updateProgress();
-
-// Initialize areas and experience counters
-document.getElementById('areas_counter').textContent = 
-    document.getElementById('operating_areas').value.length;
-document.getElementById('exp_counter').textContent = 
-    document.getElementById('experience').value.length;
-
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
