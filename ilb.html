@@ -1,294 +1,497 @@
-let currentStep = 1;
-const totalSteps = 3;
-const form = document.getElementById('boatRequestForm');
-const steps = document.querySelectorAll('.form-step');
-const progressCircles = document.querySelectorAll('.step-circle');
-const progressLabels = document.querySelectorAll('.step-label');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const submitBtn = document.getElementById('submitBtn');
-const finalMessage = document.getElementById('finalMessage');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="public/img/fav64.png" sizes="64x64">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brega — Looking for a Boat</title>
 
-const quickSubmitEndpoint = 'https://formspree.io/f/xpqaaeln';
-const fullSubmitEndpoint = 'https://formspree.io/f/xpqajnbn';
+  <style>
+    :root {
+      --blue-deep: #0b2c4d;
+      --blue-light: #3fa9f5;
+      --gold: #c9a24d;
+      --text-main: #0b2c4d;
+      --text-muted: #6b7c8f;
+      --border-light: #d9e1ea;
+      --bg-white: #ffffff;
+      --success: #10b981;
+      --error: #ef4444;
+    }
 
-const citiesByCountry = {
-    russia: ["Sochi", "Gelendzhik", "Anapa", "Vladivostok", "Kaliningrad"],
-    turkey: ["Bodrum", "Marmaris", "Fethiye", "Antalya", "Cesme"],
-    uruguay: ["Punta del Este", "Montevideo", "La Paloma", "Piriápolis"],
-    greece: ["Athens", "Mykonos", "Santorini", "Corfu", "Rhodes"],
-    croatia: ["Split", "Dubrovnik", "Zadar", "Rovinj", "Hvar"],
-    italy: ["Naples", "Rome", "Venice", "Sicily", "Sardinia"],
-    spain: ["Barcelona", "Mallorca", "Ibiza", "Valencia", "Malaga"],
-    france: ["Nice", "Cannes", "Saint-Tropez", "Marseille", "Corsica"],
-    usa: ["Miami", "Fort Lauderdale", "San Diego", "Seattle", "Boston"]
-};
+    * {
+      box-sizing: border-box;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('start_date').min = today;
-document.getElementById('start_date').value = today;
+    body {
+      margin: 0;
+      background: #f5f8fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-y: auto;
+    }
 
-const countrySelect = document.getElementById('country');
-const citySelect = document.getElementById('city');
+    .card {
+      background: var(--bg-white);
+      max-width: 960px;
+      width: 100%;
+      max-height: 95vh;
+      padding: 28px 32px 24px;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 4px 12px rgba(11, 44, 77, 0.08);
+      overflow-y: auto;
+    }
 
-countrySelect.addEventListener('change', () => {
-    const country = countrySelect.value;
-    citySelect.innerHTML = '<option value="">Select city</option>';
+    h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      color: var(--text-main);
+    }
 
-    if (!country) {
+    .description {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 760px;
+      line-height: 1.5;
+    }
+
+    .data-usage-note {
+      background-color: #f0f7ff;
+      border-left: 3px solid var(--blue-light);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .data-usage-note strong {
+      color: var(--blue-deep);
+    }
+
+    .section {
+      margin-bottom: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    input, select {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-light);
+      font-size: 14px;
+      background: #fff;
+      transition: border-color 0.2s ease;
+    }
+
+    input:hover, select:hover {
+      border-color: #b0c4de;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--blue-light);
+      box-shadow: 0 0 0 2px rgba(63, 169, 245, 0.1);
+    }
+
+    .helper {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .budget-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+      padding-left: 4px;
+    }
+
+    .budget-note .minimum {
+      color: var(--error);
+      font-weight: 500;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .consent {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-left: 4px;
+    }
+
+    .consent input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 1px;
+      accent-color: var(--blue-light);
+    }
+
+    .consent a {
+      color: var(--blue-light);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .consent a:hover {
+      text-decoration: underline;
+    }
+
+    .submit {
+      height: 42px;
+      padding: 0 32px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1a478a 100%);
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(11, 44, 77, 0.15);
+      letter-spacing: 0.3px;
+    }
+
+    .submit:hover {
+      background: linear-gradient(135deg, #0d3a6b 0%, #1e5cb8 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(11, 44, 77, 0.2);
+    }
+
+    .submit:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(11, 44, 77, 0.15);
+    }
+
+    .submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.success {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      display: block;
+    }
+
+    .message.error {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+
+    .required::after {
+      content: " *";
+      color: var(--error);
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .card {
+        padding: 20px 24px;
+        max-height: 90vh;
+      }
+      .footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .consent {
+        margin-left: 0;
+      }
+      .submit {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .card {
+        padding: 16px 20px;
+        max-height: 85vh;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .description, .data-usage-note {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>I'm looking for a boat!</h1>
+    <p class="description">
+      Once submitted, your request will be added to our active requests group.
+      Boat owners will be able to see it and decide whether to accept it.
+    </p>
+
+    <div class="data-usage-note">
+      <strong>How we use your data:</strong> Your contact information is shared only with verified boat owners who may accept your request. We use your preferences to match you with suitable boats and improve our service. You can manage your privacy settings in your account.
+    </div>
+
+    <form id="boatRequestForm" action="https://formspree.io/f/mdkqbpqz" method="POST">
+      <div class="section grid-2">
+        <div>
+          <label for="country" class="required">Country</label>
+          <select id="country" name="country" required>
+            <option value="">Select country</option>
+            <option value="russia">Russia</option>
+            <option value="turkey">Turkey</option>
+            <option value="uruguay">Uruguay</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="city" class="required">Coastal city</label>
+          <select id="city" name="city" disabled required>
+            <option value="">Select city</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="helper">Available cities are limited and will expand soon.</p>
+
+      <div class="section grid-2">
+        <div>
+          <label for="start_date" class="required">Start date</label>
+          <input type="date" id="start_date" name="start_date" required />
+        </div>
+        <div>
+          <label for="passengers" class="required">Passengers</label>
+          <input type="number" id="passengers" name="passengers" min="1" placeholder="e.g., 4" required />
+        </div>
+      </div>
+
+      <!-- Новое поле: Планируемое количество дней -->
+      <div class="section">
+        <label for="duration" class="required">Planned duration</label>
+        <select id="duration" name="duration" required>
+          <option value="">Select duration</option>
+          <option value="couple_hours">A couple of hours</option>
+          <option value="half_day">Half day</option>
+          <option value="full_day">Full day</option>
+          <option value="three_days">Three days</option>
+          <option value="week">Week</option>
+          <option value="month">Month</option>
+        </select>
+      </div>
+
+      <!-- Новое поле: Бюджет -->
+      <div class="section">
+        <label for="budget" class="required">Estimated budget</label>
+        <input type="number" id="budget" name="budget" min="0" step="10" placeholder="e.g., 500" required />
+        <div class="budget-note">
+          Amount is in US dollars. <span class="minimum">We recommend a minimum donation of $100 to the boat owner who will host you.</span>
+        </div>
+      </div>
+
+      <div class="section grid-2">
+        <div>
+          <label for="name" class="required">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required />
+        </div>
+        <div>
+          <label for="email" class="required">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+      </div>
+
+      <div class="section grid-2">
+        <div>
+          <label for="phone" class="required">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" required />
+        </div>
+        <div>
+          <label for="promo_code">Promo code</label>
+          <input type="text" id="promo_code" name="promo_code" placeholder="Optional" />
+        </div>
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <div class="footer">
+        <label class="consent">
+          <input type="checkbox" name="consent" required /> 
+          <span>I agree to the <a href="#">Refund Policy and Terms of Use</a></span>
+        </label>
+        <button type="submit" class="submit" id="submitBtn">
+          Submit Request
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const citiesByCountry = {
+      russia: ["Sochi", "Gelendzhik", "Anapa", "Vladivostok", "Kaliningrad"],
+      turkey: ["Bodrum", "Marmaris", "Fethiye", "Antalya", "Cesme"],
+      uruguay: ["Punta del Este", "Montevideo", "La Paloma", "Piriápolis"]
+    };
+
+    const countrySelect = document.getElementById('country');
+    const citySelect = document.getElementById('city');
+    const form = document.getElementById('boatRequestForm');
+    const messageDiv = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
+    const budgetInput = document.getElementById('budget');
+
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('start_date').min = today;
+
+    // City selection logic
+    countrySelect.addEventListener('change', () => {
+      const country = countrySelect.value;
+      citySelect.innerHTML = '<option value="">Select city</option>';
+
+      if (!country) {
         citySelect.disabled = true;
         citySelect.required = false;
         return;
-    }
+      }
 
-    if (citiesByCountry[country]) {
-        citiesByCountry[country].forEach(city => {
-            const option = document.createElement('option');
-            option.value = city.toLowerCase().replace(/\s+/g, '_');
-            option.textContent = city;
-            citySelect.appendChild(option);
-        });
+      citiesByCountry[country].forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+      });
 
-        citySelect.disabled = false;
-        citySelect.required = true;
-    }
-});
-
-function updateProgress() {
-    progressCircles.forEach((circle, index) => {
-        if (index + 1 === currentStep) {
-            circle.classList.add('active');
-        } else if (index + 1 < currentStep) {
-            circle.classList.add('active');
-        } else {
-            circle.classList.remove('active');
-        }
+      citySelect.disabled = false;
+      citySelect.required = true;
     });
 
-    progressLabels.forEach((label, index) => {
-        if (index + 1 === currentStep || index + 1 < currentStep) {
-            label.classList.add('active');
-        } else {
-            label.classList.remove('active');
-        }
+    // Валидация бюджета
+    budgetInput.addEventListener('blur', () => {
+      const value = parseInt(budgetInput.value);
+      if (value && value < 100) {
+        showMessage('For a better chance of acceptance, consider increasing your budget to at least $100.', 'error');
+      }
     });
 
-    prevBtn.disabled = currentStep === 1;
-    
-    if (currentStep === totalSteps) {
-        nextBtn.textContent = 'Submit';
-        nextBtn.type = 'button'; // Importante: mantener como button
-    } else {
-        nextBtn.textContent = 'Next';
-        nextBtn.type = 'button';
-    }
-
-    steps.forEach(step => {
-        if (parseInt(step.dataset.step) === currentStep) {
-            step.classList.add('active');
-        } else {
-            step.classList.remove('active');
-        }
-    });
-}
-
-function validateStep(step) {
-    const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
-    const requiredFields = currentStepElement.querySelectorAll('[required]');
-    
-    for (let field of requiredFields) {
-        // Para checkboxes, verificar si están marcados
-        if (field.type === 'checkbox') {
-            if (!field.checked) {
-                field.focus();
-                return false;
-            }
-        } 
-        // Para otros campos, verificar si tienen valor
-        else if (!field.value.trim()) {
-            field.focus();
-            return false;
-        }
-        
-        // Validación específica para email
-        if (field.type === 'email') {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(field.value)) {
-                field.focus();
-                return false;
-            }
-        }
-    }
-    
-    return true;
-}
-
-async function sendQuickContactInfo() {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    
-    const quickFormData = new FormData();
-    quickFormData.append('name', name);
-    quickFormData.append('email', email);
-    quickFormData.append('phone', phone);
-    quickFormData.append('source', 'boat_request_step1');
-    
-    try {
-        await fetch(quickSubmitEndpoint, {
-            method: 'POST',
-            body: quickFormData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        console.log('Quick contact info submitted successfully');
-    } catch (error) {
-        console.error('Error sending quick contact info:', error);
-    }
-}
-
-nextBtn.addEventListener('click', async function() {
-    if (!validateStep(currentStep)) {
-        showMessage('Please fill in all required fields correctly before proceeding.', 'error', finalMessage);
-        return;
-    }
-    
-    if (currentStep === 1) {
-        await sendQuickContactInfo();
-    }
-    
-    if (currentStep < totalSteps) {
-        currentStep++;
-        updateProgress();
-        finalMessage.style.display = 'none'; // Ocultar mensajes al cambiar de paso
-    } else {
-        // En el último paso, ejecutar el envío del formulario
-        submitBtn.click();
-    }
-});
-
-prevBtn.addEventListener('click', function() {
-    if (currentStep > 1) {
-        currentStep--;
-        updateProgress();
-        finalMessage.style.display = 'none'; // Ocultar mensajes al cambiar de paso
-    }
-});
-
-const budgetInput = document.getElementById('budget');
-budgetInput.addEventListener('blur', () => {
-    const value = parseInt(budgetInput.value);
-    if (value && value < 100) {
-        showMessage('For a better chance of acceptance, consider increasing your budget to at least $100.', 'error', finalMessage);
-    }
-});
-
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const countrySelect = document.getElementById('country');
-    const selectedCountry = countrySelect.value;
-    
-    let targetEndpoint;
-    let isCaptainEndpoint = false;
-    
-    if (selectedCountry === 'turkey') {
-        targetEndpoint = 'https://formspree.io/f/xdaozyzz';
-        isCaptainEndpoint = true;
-    } else if (selectedCountry === 'uruguay') {
-        targetEndpoint = 'https://formspree.io/f/xkonbpqo';
-        isCaptainEndpoint = true;
-    } else {
-        targetEndpoint = 'https://formspree.io/f/xpqajnbn';
-        isCaptainEndpoint = false;
-    }
-    
-    form.action = targetEndpoint;
-    console.log(`Sending to ${selectedCountry} via ${targetEndpoint}, isCaptain: ${isCaptainEndpoint}`);
-    
-    const budgetValue = parseInt(budgetInput.value);
-    if (budgetValue && budgetValue < 100) {
+    // Form submission handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Проверка бюджета
+      const budgetValue = parseInt(budgetInput.value);
+      if (budgetValue && budgetValue < 100) {
         if (!confirm('Your budget is below the recommended minimum of $100. This may reduce your chances of acceptance. Do you want to submit anyway?')) {
-            nextBtn.disabled = false;
-            nextBtn.textContent = 'Submit';
-            prevBtn.disabled = false;
-            return;
+          return;
         }
-    }
-    
-    nextBtn.disabled = true;
-    prevBtn.disabled = true;
-    nextBtn.textContent = 'Sending...';
-    
-    try {
+      }
+      
+      // Disable submit button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      messageDiv.style.display = 'none';
+      
+      try {
         const formData = new FormData(form);
         
-        const boatTypeSelect = document.getElementById('boat_type');
-        const selectedOption = boatTypeSelect.options[boatTypeSelect.selectedIndex];
-        formData.append('boat_type_display', selectedOption.text);
-        
-        if (isCaptainEndpoint) {
-            console.log('Removing contact info for captains');
-            formData.delete('email');
-            formData.delete('phone');
-            formData.append('recipient', 'captains');
-        }
-        
+        // Send to Formspree
         const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
         });
         
         if (response.ok) {
-            const message = isCaptainEndpoint 
-                ? 'Thank you! Your request has been submitted successfully. Captains in ' + selectedCountry + ' will review your application.'
-                : 'Thank you! Your request has been submitted successfully. Boat owners will contact you soon.';
-            
-            showMessage(message, 'success', finalMessage);
-            
-            setTimeout(() => {
-                form.reset();
-                currentStep = 1;
-                updateProgress();
-                finalMessage.style.display = 'none';
-                nextBtn.disabled = false;
-                nextBtn.textContent = 'Next';
-                prevBtn.disabled = true;
-                document.getElementById('start_date').value = today;
-                citySelect.disabled = true;
-                citySelect.innerHTML = '<option value="">Select city</option>';
-                form.action = 'https://formspree.io/f/xpqajnbn';
-            }, 5000);
+          // Success
+          showMessage('Thank you! Your request has been submitted successfully. Boat owners will contact you soon.', 'success');
+          form.reset();
+          citySelect.disabled = true;
+          citySelect.required = false;
         } else {
-            showMessage('There was an error submitting your request. Please try again later.', 'error', finalMessage);
-            nextBtn.disabled = false;
-            nextBtn.textContent = 'Submit';
-            prevBtn.disabled = false;
+          // Error from Formspree
+          const errorData = await response.json();
+          showMessage('There was an error submitting your request. Please try again later.', 'error');
+          console.error('Formspree error:', errorData);
         }
-    } catch (error) {
-        console.error('Network error:', error);
-        showMessage('Network error. Please check your connection and try again.', 'error', finalMessage);
-        nextBtn.disabled = false;
-        nextBtn.textContent = 'Submit';
-        prevBtn.disabled = false;
-    }
-});
+      } catch (error) {
+        // Network error
+        showMessage('Network error. Please check your connection and try again.', 'error');
+        console.error('Submission error:', error);
+      } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Request';
+      }
+    });
 
-function showMessage(text, type, element) {
-    element.textContent = text;
-    element.className = `message ${type}`;
-    element.style.display = 'block';
-    
-    if (type === 'success') {
+    function showMessage(text, type) {
+      messageDiv.textContent = text;
+      messageDiv.className = `message ${type}`;
+      messageDiv.style.display = 'block';
+      
+      // Auto-hide success messages after 5 seconds
+      if (type === 'success') {
         setTimeout(() => {
-            element.style.display = 'none';
+          messageDiv.style.display = 'none';
         }, 5000);
+      }
     }
-}
 
-updateProgress();
+    // Add form validation for city field
+    form.addEventListener('change', () => {
+      if (countrySelect.value && citySelect.disabled) {
+        citySelect.disabled = false;
+        citySelect.required = true;
+      }
+    });
+  </script>
 
+</body>
+</html>
